@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TileGrid : MonoBehaviour
 {
     private GridNode[,] m_nodes;
 
+    [SerializeField]
+    private Tilemap m_foreground;
+
+    [SerializeField]
+    private Tilemap m_background;
+
+    // TODO @matthew - take this value from m_forground
     [SerializeField]
     private int m_sizeX;
 
@@ -32,9 +38,38 @@ public class TileGrid : MonoBehaviour
         {
             for (int y = 0; y < sizeY; y++)
             {
+                m_nodes[x, y] = new GridNode();
                 m_nodes[x, y].x = x;
                 m_nodes[x, y].y = y;
                 m_nodes[x, y].m_grid = this;
+            }
+        }
+
+        // mark tiles in m_foreground as walls
+        // adapted from
+        // https://gamedev.stackexchange.com/a/150949
+
+        m_foreground.CompressBounds();
+        BoundsInt bounds = m_foreground.cellBounds;
+        TileBase[] allTiles = m_foreground.GetTilesBlock(bounds);
+
+        for (int x = 0; x < bounds.size.x; x++)
+        {
+            for (int y = 0; y < bounds.size.y; y++)
+            {
+                TileBase tile = allTiles[x + y * bounds.size.x];
+                if (tile != null)
+                {
+                    Vector3 worldpos = m_foreground.CellToWorld(new Vector3Int(x, y, 0));
+
+                    GridNode node = GetNearestNode(worldpos.x, worldpos.y);
+                    if (node != null)
+                    {
+                        node.isWall = true;
+                    }
+
+                    // Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
+                }
             }
         }
     }
@@ -55,7 +90,7 @@ public class TileGrid : MonoBehaviour
     {
         foreach (GridNode node in m_nodes)
         {
-            foreach (GameObject it_obj in node.m_objectsInNode)
+            foreach (GameObject it_obj in node.AllObjects())
             {
                 if (obj == it_obj)
                 {
@@ -70,5 +105,16 @@ public class TileGrid : MonoBehaviour
     public Vector3 GridCoordToWorldCoord(int x, int y)
     {
         return new Vector3(m_startX + x + 0.5f, m_startY + y + 0.5f, 0);
+    }
+
+    public GridNode GetNearestNode(float x, float y)
+    {
+        int ix = (int)(x + 0.5f);
+        int iy = (int)(y + 0.5f);
+
+        ix -= m_startX;
+        iy -= m_startY;
+
+        return GetNode(ix, iy);
     }
 }
