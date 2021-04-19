@@ -15,14 +15,6 @@ public class TileGrid : MonoBehaviour
     private int m_startX = 0;
     private int m_startY = 0;
 
-    //private Grid(int in_sizeX, int in_sizeY)
-    //{
-    //    m_nodes = new GridNode[in_sizeX, in_sizeY];
-    //    // TODO @matthew : set x,y coords
-    //    m_sizeX = in_sizeX;
-    //    m_sizeY = in_sizeY;
-    //}
-
     public int sizeX
     { get { return m_sizeX; } }
 
@@ -42,6 +34,7 @@ public class TileGrid : MonoBehaviour
             {
                 m_nodes[x, y].x = x;
                 m_nodes[x, y].y = y;
+                m_nodes[x, y].m_grid = this;
             }
         }
     }
@@ -49,6 +42,9 @@ public class TileGrid : MonoBehaviour
     public GridNode GetNode(int x, int y)
     {
         if (x >= m_sizeX || y >= m_sizeY)
+            return null;
+
+        if (x < 0 || y < 0)
             return null;
 
         return m_nodes[x, y];

@@ -18,9 +18,6 @@ public class gridobject : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Transform trans = GetComponent<Transform>();
-
-        Vector3 pos = m_grid.GridCoordToWorldCoord(x, y);
-        trans.position = pos;
+        transform.position = m_grid.GridCoordToWorldCoord(x, y);
     }
 }
