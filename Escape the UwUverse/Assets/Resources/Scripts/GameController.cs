@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -40,9 +38,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private UserData m_userData;
+    private FileIO.UserData m_userData;
 
-    public UserData userData
+    public FileIO.UserData userData
     {
         get { return m_userData; }
         set { m_userData = value; }
@@ -52,6 +50,6 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //m_applicationPath = Application.persistentDataPath;
-        m_userData = new UserData();
+        m_userData = new FileIO.UserData();
     }
 }
