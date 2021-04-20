@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class DisplayDialog : MonoBehaviour
@@ -14,6 +15,9 @@ public class DisplayDialog : MonoBehaviour
 
     bool typing = false;
     string currentSentance;
+
+    [SerializeField] TextMeshProUGUI activeName;
+    [SerializeField] Image characterSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,7 @@ public class DisplayDialog : MonoBehaviour
         text[0] = "test";
         delay[0] = 0.5f;
 
-        StartDialog(text, delay);
+        StartDialog(text, delay, "JackL");
     }
 
     private void Awake()
@@ -50,6 +54,46 @@ public class DisplayDialog : MonoBehaviour
 
     public void StartDialog(string[] customDialog, float[] textDelay)
     {
+        activeName.transform.parent.gameObject.SetActive(false);
+        characterSprite.enabled = false;
+
+        sentances.Clear();
+
+        LeanTween.move(gameObject, new Vector3(transform.position.x, -100,0), 1);
+
+        foreach(string sentance in customDialog)
+        {
+            sentances.Enqueue(sentance);
+        }
+        
+        foreach(float delay in textDelay)
+        {
+            delays.Enqueue(delay);
+        }
+
+        while (delays.Count < sentances.Count)
+        {
+            delays.Enqueue(textDelay[0]);
+        }
+
+        DisplayNextSentance();
+    }
+    
+    public void StartDialog(string[] customDialog, float[] textDelay, string name)
+    {
+        activeName.transform.parent.gameObject.SetActive(true);
+        characterSprite.enabled = true;
+
+        activeName.text = name;
+        string path = "GFX/DialogueSprites/" + name;
+        characterSprite.sprite = Resources.Load<Sprite>(path) ;
+
+        if (characterSprite.sprite == null)
+        {
+            Debug.LogWarning("Sprite at " + path + " not loaded");
+            characterSprite.enabled = false;
+        }
+
         sentances.Clear();
 
         LeanTween.move(gameObject, new Vector3(transform.position.x, -100,0), 1);
