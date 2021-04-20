@@ -1,47 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogueBox : MonoBehaviour
 {
     [Header("Entered Text")]
     [TextArea(3, 10)]
-    [SerializeField] private string[] customDialog;
+    [SerializeField] private string[] in_customDialog;
 
-    [SerializeField] private float[] textDelay;
+    [SerializeField] private float[] in_textDelay;
 
     [Header("Speaker")]
-    [SerializeField] private string speakerName;
-    [SerializeField] private bool randomPerson;
+    [SerializeField] private string in_speakerName;
+
+    [SerializeField] private bool in_randomPerson;
 
     [Header("Display Box")]
-    [SerializeField] private UwUverse.DisplayDialog displayText;
+    [SerializeField] private UwUverse.DisplayDialog in_displayText;
 
-    private Sprite[] people;
-    private int personIndex;
+    private Sprite[] m_people;
+    private int m_personIndex;
 
     private void Start()
     {
-        people = Resources.LoadAll<Sprite>("GFX/DialogueSprites");
-        personIndex = Random.Range(0, people.Length);
+        m_people = Resources.LoadAll<Sprite>("GFX/DialogueSprites");
+        m_personIndex = Random.Range(0, m_people.Length);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (randomPerson)
+            if (in_randomPerson)
             {
-                displayText.StartDialog(customDialog, textDelay, people[personIndex].name);
+                in_displayText.StartDialog(in_customDialog, in_textDelay, m_people[m_personIndex].name);
             }
             else if (name != "")
             {
-                displayText.StartDialog(customDialog, textDelay, speakerName);
+                in_displayText.StartDialog(in_customDialog, in_textDelay, in_speakerName);
             }
             else
             {
-                displayText.StartDialog(customDialog, textDelay);
+                in_displayText.StartDialog(in_customDialog, in_textDelay);
             }
         }
     }

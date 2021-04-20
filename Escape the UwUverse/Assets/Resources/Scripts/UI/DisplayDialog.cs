@@ -8,27 +8,27 @@ namespace UwUverse
 {
     public class DisplayDialog : MonoBehaviour
     {
-        public MasterInput controls;
+        private MasterInput m_controls;
 
-        private TextMeshProUGUI tmp;
-        private Queue<string> sentances;
-        private Queue<float> delays;
+        private TextMeshProUGUI m_tmp;
+        private Queue<string> m_sentances;
+        private Queue<float> m_delays;
 
-        private bool typing = false;
-        private string currentSentance;
+        private bool m_typing = false;
+        private string m_currentSentance;
 
-        [SerializeField] private int maxHeight;
-        [SerializeField] private int minHeight;
+        [SerializeField] private int in_maxHeight;
+        [SerializeField] private int in_minHeight;
 
-        [SerializeField] private TextMeshProUGUI activeName;
-        [SerializeField] private Image characterSprite;
-        [SerializeField] private Image finishedMark;
+        [SerializeField] private TextMeshProUGUI in_activeName;
+        [SerializeField] private Image in_characterSprite;
+        [SerializeField] private Image in_finishedMark;
 
         private void Start()
         {
-            sentances = new Queue<string>();
-            delays = new Queue<float>();
-            tmp = GetComponentInChildren<TextMeshProUGUI>();
+            m_sentances = new Queue<string>();
+            m_delays = new Queue<float>();
+            m_tmp = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         private void Awake()
@@ -39,109 +39,109 @@ namespace UwUverse
             text[0] = "test";
             delay[0] = 0.1f;
 
-            controls = new MasterInput();
-            controls.Interact.Confirm.performed += ctx => DialougeSkip();
-            controls.Interact.Cancel.performed += ctx => EndDialog();
+            m_controls = new MasterInput();
+            m_controls.Interact.Confirm.performed += ctx => DialougeSkip();
+            m_controls.Interact.Cancel.performed += ctx => EndDialog();
         }
 
         private void OnEnable()
         {
-            controls.Enable();
+            m_controls.Enable();
         }
 
         private void OnDisable()
         {
-            controls.Disable();
+            m_controls.Disable();
         }
 
         public void StartDialog(string[] customDialog, float[] textDelay)
         {
-            activeName.transform.parent.gameObject.SetActive(false);
-            characterSprite.enabled = false;
-            finishedMark.enabled = false;
-            tmp.text = "";
+            in_activeName.transform.parent.gameObject.SetActive(false);
+            in_characterSprite.enabled = false;
+            in_finishedMark.enabled = false;
+            m_tmp.text = "";
 
-            sentances.Clear();
-            delays.Clear();
+            m_sentances.Clear();
+            m_delays.Clear();
 
             foreach (string sentance in customDialog)
             {
-                sentances.Enqueue(sentance);
+                m_sentances.Enqueue(sentance);
             }
 
             foreach (float delay in textDelay)
             {
-                delays.Enqueue(delay);
+                m_delays.Enqueue(delay);
             }
 
-            while (delays.Count < sentances.Count)
+            while (m_delays.Count < m_sentances.Count)
             {
-                delays.Enqueue(0);
+                m_delays.Enqueue(0);
             }
 
-            LeanTween.move(gameObject, new Vector3(transform.position.x, maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
+            LeanTween.move(gameObject, new Vector3(transform.position.x, in_maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
         }
 
         public void StartDialog(string[] customDialog, float[] textDelay, string name)
         {
-            activeName.transform.parent.gameObject.SetActive(true);
-            characterSprite.enabled = true;
-            finishedMark.enabled = false;
-            tmp.text = "";
+            in_activeName.transform.parent.gameObject.SetActive(true);
+            in_characterSprite.enabled = true;
+            in_finishedMark.enabled = false;
+            m_tmp.text = "";
 
-            activeName.text = name;
+            in_activeName.text = name;
             string path = "GFX/DialogueSprites/" + name;
-            characterSprite.sprite = Resources.Load<Sprite>(path);
+            in_characterSprite.sprite = Resources.Load<Sprite>(path);
 
-            if (characterSprite.sprite == null)
+            if (in_characterSprite.sprite == null)
             {
                 Debug.LogWarning("Sprite at " + path + " not loaded");
-                characterSprite.enabled = false;
+                in_characterSprite.enabled = false;
             }
 
-            sentances.Clear();
-            delays.Clear();
+            m_sentances.Clear();
+            m_delays.Clear();
 
             foreach (string sentance in customDialog)
             {
-                sentances.Enqueue(sentance);
+                m_sentances.Enqueue(sentance);
             }
 
             foreach (float delay in textDelay)
             {
-                delays.Enqueue(delay);
+                m_delays.Enqueue(delay);
             }
 
-            while (delays.Count < sentances.Count)
+            while (m_delays.Count < m_sentances.Count)
             {
-                delays.Enqueue(textDelay[0]);
+                m_delays.Enqueue(textDelay[0]);
             }
 
-            LeanTween.move(gameObject, new Vector3(transform.position.x, maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
+            LeanTween.move(gameObject, new Vector3(transform.position.x, in_maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
         }
 
         private void DisplayNextSentance()
         {
-            if (sentances.Count == 0)
+            if (m_sentances.Count == 0)
             {
                 EndDialog();
             }
             else
             {
-                currentSentance = sentances.Dequeue();
+                m_currentSentance = m_sentances.Dequeue();
                 StopAllCoroutines();
-                StartCoroutine(TypeSentance(currentSentance, delays.Dequeue()));
+                StartCoroutine(TypeSentance(m_currentSentance, m_delays.Dequeue()));
             }
         }
 
         private void DialougeSkip()
         {
-            if (typing)
+            if (m_typing)
             {
                 StopAllCoroutines();
-                tmp.text = currentSentance;
-                typing = false;
-                finishedMark.enabled = true;
+                m_tmp.text = m_currentSentance;
+                m_typing = false;
+                in_finishedMark.enabled = true;
             }
             else
             {
@@ -151,21 +151,21 @@ namespace UwUverse
 
         private void EndDialog()
         {
-            LeanTween.move(gameObject, new Vector3(transform.position.x, minHeight, 0), 1);
+            LeanTween.move(gameObject, new Vector3(transform.position.x, in_minHeight, 0), 1);
         }
 
         private IEnumerator TypeSentance(string sentance, float delay)
         {
-            typing = true;
-            finishedMark.enabled = false;
-            tmp.text = "";
+            m_typing = true;
+            in_finishedMark.enabled = false;
+            m_tmp.text = "";
             foreach (char letter in sentance.ToCharArray())
             {
-                tmp.text += letter;
+                m_tmp.text += letter;
                 yield return new WaitForSeconds(delay);
             }
-            finishedMark.enabled = true;
-            typing = false;
+            in_finishedMark.enabled = true;
+            m_typing = false;
         }
     }
 }
