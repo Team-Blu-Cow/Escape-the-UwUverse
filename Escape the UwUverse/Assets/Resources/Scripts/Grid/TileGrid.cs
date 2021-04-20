@@ -13,30 +13,30 @@ public class TileGrid : MonoBehaviour
 
     // TODO @matthew - take this value from m_forground
     [SerializeField]
-    private int m_sizeX;
+    private int m_width;
 
     [SerializeField]
-    private int m_sizeY;
+    private int m_height;
 
     private int m_startX = 0;
     private int m_startY = 0;
 
-    public int sizeX
-    { get { return m_sizeX; } }
+    public int width
+    { get { return m_width; } }
 
-    public int sizeY
-    { get { return m_sizeY; } }
+    public int height
+    { get { return m_height; } }
 
     private void Awake()
     {
-        m_startX = -(m_sizeX / 2);
-        m_startY = -(m_sizeY / 2);
-        m_nodes = new GridNode[sizeX, sizeY];
+        m_startX = -(m_width / 2);
+        m_startY = -(m_height / 2);
+        m_nodes = new GridNode[width, height];
 
         //set x,y coords
-        for (int x = 0; x < sizeX; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < sizeY; y++)
+            for (int y = 0; y < height; y++)
             {
                 m_nodes[x, y] = new GridNode(x, y);
                 m_nodes[x, y].m_grid = this;
@@ -60,7 +60,7 @@ public class TileGrid : MonoBehaviour
                 {
                     Vector3 worldpos = m_foreground.CellToWorld(new Vector3Int(x, y, 0));
 
-                    GridNode node = GetNearestNode(worldpos.x, worldpos.y);
+                    GridNode node = GetNearestNode(worldpos.x + 1f, worldpos.y - 1f);
                     if (node != null)
                     {
                         node.isWall = true;
@@ -74,7 +74,7 @@ public class TileGrid : MonoBehaviour
 
     public GridNode GetNode(int x, int y)
     {
-        if (x >= m_sizeX || y >= m_sizeY)
+        if (x >= m_width || y >= m_height)
             return null;
 
         if (x < 0 || y < 0)
@@ -117,12 +117,25 @@ public class TileGrid : MonoBehaviour
 
     public GridNode GetNearestNode(float x, float y)
     {
-        int ix = (int)(x + 0.5f);
-        int iy = (int)(y + 0.5f);
+        int ix = Mathf.FloorToInt(x - 0.5f);
+        int iy = Mathf.FloorToInt(y - 0.5f);
 
-        ix -= m_startX;
-        iy -= m_startY;
+        ix += m_startX;
+        iy += m_startY;
 
-        return GetNode(ix, iy);
+        return GetNode(ix + width, iy + height);
+    }
+
+    //     public GridNode GetNearestNode(float x, float y)
+    //     {
+    //         int ix = Mathf.RoundToInt(x) + Mathf.Abs(m_startX);
+    //         int iy = Mathf.RoundToInt(y) + Mathf.Abs(m_startY);
+    //
+    //         return GetNode(ix, iy);
+    //     }
+
+    public GridNode GetNearestNode(Vector2 pos)
+    {
+        return GetNearestNode(pos.x, pos.y);
     }
 }

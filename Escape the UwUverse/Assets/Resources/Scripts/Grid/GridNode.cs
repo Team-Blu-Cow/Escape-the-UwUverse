@@ -38,8 +38,8 @@ public class GridNode
 
     public bool isWall
     {
-        get { return isWall; }
-        set { isWall = value; }
+        get { return m_isWall; }
+        set { m_isWall = value; }
     }
 
     public int x
@@ -50,6 +50,11 @@ public class GridNode
     public int y
     {
         get { return m_posY; }
+    }
+
+    public Vector2Int position
+    {
+        get { return new Vector2Int(x, y); }
     }
 
     public void AddObject(GameObject obj)
