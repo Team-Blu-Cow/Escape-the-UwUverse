@@ -6,7 +6,10 @@ public class TileGrid : MonoBehaviour
     private GridNode[,] m_nodes;
 
     [SerializeField]
-    private Tilemap m_foreground;
+    private Tilemap m_hole;
+
+    [SerializeField]
+    private Tilemap m_walls;
 
     [SerializeField]
     private Tilemap m_background;
@@ -43,30 +46,28 @@ public class TileGrid : MonoBehaviour
             }
         }
 
-        // mark tiles in m_foreground as walls
-        // adapted from
-        // https://gamedev.stackexchange.com/a/150949
-
-        m_foreground.CompressBounds();
-        BoundsInt bounds = m_foreground.cellBounds;
-        TileBase[] allTiles = m_foreground.GetTilesBlock(bounds);
-
-        for (int x = 0; x < bounds.size.x; x++)
         {
-            for (int y = 0; y < bounds.size.y; y++)
+            for (int w = 0; w < width; w++)
             {
-                TileBase tile = allTiles[x + y * bounds.size.x];
-                if (tile != null)
+                for (int h = 0; h < height; h++)
                 {
-                    Vector3 worldpos = m_foreground.CellToWorld(new Vector3Int(x, y, 0));
+                    Vector3 pos = GridCoordToWorldCoord(w, h);
 
-                    GridNode node = GetNearestNode(worldpos.x + 1f, worldpos.y - 1f);
-                    if (node != null)
                     {
-                        node.isWall = true;
+                        Vector3Int cell = m_walls.WorldToCell(pos);
+                        if (cell != null && m_walls.HasTile(cell))
+                        {
+                            GetNode(w, h).isWall = true;
+                        }
                     }
 
-                    // Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
+                    {
+                        Vector3Int cell = m_hole.WorldToCell(pos);
+                        if (cell != null && m_hole.HasTile(cell))
+                        {
+                            GetNode(w, h).isHole = true;
+                        }
+                    }
                 }
             }
         }

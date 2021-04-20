@@ -14,21 +14,10 @@ public class GridNode
     private int m_posX = 0;
     private int m_posY = 0;
 
-    public bool m_isWall = false;
-
     public TileGrid m_grid;
 
-    public GridNode getAbove()
-    { return m_grid.GetNode(x, y + 1); }
-
-    public GridNode getBelow()
-    { return m_grid.GetNode(x, y - 1); }
-
-    public GridNode getLeft()
-    { return m_grid.GetNode(x - 1, y); }
-
-    public GridNode getRight()
-    { return m_grid.GetNode(x + 1, y); }
+    private bool m_isWall = false;
+    private bool m_isHole = false;
 
     public GridNode GetNeighbour(int in_x, int in_y)
     { return m_grid.GetNode(x + in_x, y + in_y); }
@@ -40,6 +29,12 @@ public class GridNode
     {
         get { return m_isWall; }
         set { m_isWall = value; }
+    }
+
+    public bool isHole
+    {
+        get { return m_isHole; }
+        set { m_isHole = value; }
     }
 
     public int x

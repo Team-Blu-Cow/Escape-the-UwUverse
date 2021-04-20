@@ -32,7 +32,6 @@ public class bullet : MonoBehaviour
         }
         else
         {
-            Debug.Log("bullet destroyed");
             Player.m_PlayerMoved -= Move;
             Destroy(gameObject);
         }
