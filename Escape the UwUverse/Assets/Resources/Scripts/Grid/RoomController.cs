@@ -65,7 +65,12 @@ public class RoomController : MonoBehaviour
     private void Update()
     {
         Vector3 cameraPos = Camera.main.transform.position;
-        cameraPos = Vector3.Lerp(cameraPos, m_closest.transform.position, 0.05f);
+
+        Vector3 diff = m_player.transform.position - m_closest.transform.position;
+        diff = new Vector3(diff.x * 0.1f, diff.y * 0.1f, 0);
+
+        Vector3 target = m_closest.transform.position + diff;
+        cameraPos = Vector3.Lerp(cameraPos, target, 0.05f);
         Camera.main.transform.position = cameraPos;
     }
 }
