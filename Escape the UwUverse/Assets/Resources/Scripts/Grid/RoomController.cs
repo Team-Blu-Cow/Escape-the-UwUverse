@@ -9,6 +9,21 @@ public class RoomController : MonoBehaviour
     private GameObject m_closest;
     private GameObject m_player;
 
+    [SerializeField]
+    private Cinemachine.CinemachineVirtualCamera cam;
+
+    private GameObject camLookPoint = null;
+
+    private void Awake()
+    {
+        camLookPoint = GameObject.Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
+    }
+
+    private void OnDestroy()
+    {
+        GameObject.Destroy(camLookPoint);
+    }
+
     private void Start()
     {
         m_player = GameObject.Find("Player");
@@ -64,13 +79,18 @@ public class RoomController : MonoBehaviour
     // TODO @matthew - conver this over to lean twean
     private void Update()
     {
-        Vector3 cameraPos = Camera.main.transform.position;
-
+        //Vector3 cameraPos = Camera.main.transform.position;
+        //
         Vector3 diff = m_player.transform.position - m_closest.transform.position;
         diff = new Vector3(diff.x * 0.1f, diff.y * 0.1f, 0);
 
         Vector3 target = m_closest.transform.position + diff;
-        cameraPos = Vector3.Lerp(cameraPos, target, 0.05f);
-        Camera.main.transform.position = cameraPos;
+
+        camLookPoint.transform.position = target;
+
+        cam.Follow = camLookPoint.transform;
+
+        //cameraPos = Vector3.Lerp(cameraPos, target, 0.05f);
+        //Camera.main.transform.position = cameraPos;
     }
 }
