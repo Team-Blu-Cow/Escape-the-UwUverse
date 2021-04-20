@@ -38,9 +38,7 @@ public class TileGrid : MonoBehaviour
         {
             for (int y = 0; y < sizeY; y++)
             {
-                m_nodes[x, y] = new GridNode();
-                m_nodes[x, y].x = x;
-                m_nodes[x, y].y = y;
+                m_nodes[x, y] = new GridNode(x, y);
                 m_nodes[x, y].m_grid = this;
             }
         }
@@ -85,6 +83,11 @@ public class TileGrid : MonoBehaviour
         return m_nodes[x, y];
     }
 
+    public GridNode GetNode(Vector2Int pos)
+    {
+        return GetNode(pos.x, pos.y);
+    }
+
     // very inefficent
     public GridNode FindObjectOnGrid(GameObject obj)
     {
@@ -100,6 +103,11 @@ public class TileGrid : MonoBehaviour
         }
 
         return null;
+    }
+
+    public Vector3 GridCoordToWorldCoord(Vector2Int pos)
+    {
+        return GridCoordToWorldCoord(pos.x, pos.y);
     }
 
     public Vector3 GridCoordToWorldCoord(int x, int y)
