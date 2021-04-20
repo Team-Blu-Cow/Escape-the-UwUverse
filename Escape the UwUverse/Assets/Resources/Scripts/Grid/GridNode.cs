@@ -70,18 +70,6 @@ public class GridNode
         return m_objectsInNode.Contains(obj);
     }
 
-    public bool HasObject<T>()
-    {
-        foreach (GameObject obj in m_objectsInNode)
-        {
-            if (obj != null && obj.GetComponent<T>() != null)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<GameObject> AllObjects()
     {
         return m_objectsInNode;
