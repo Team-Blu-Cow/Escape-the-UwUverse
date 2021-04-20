@@ -77,6 +77,7 @@ public class SplashScreenSequence : MonoBehaviour
             globalLight.intensity = Mathf.Lerp(0, 1, currentTime / timeTaken);
             yield return null;
         }
+
         yield return new WaitForSeconds(1.5f); // logo to Main Menu time
 
         GameObject.Find("LevelLoader").GetComponent<LevelLoader>().SwitchScene("MainMenu");
