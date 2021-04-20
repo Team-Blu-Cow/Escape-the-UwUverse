@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHeight: 200
-  minHeight: -200
+  minHeight: -300
   activeName: {fileID: 1788322936}
   characterSprite: {fileID: 2137071281}
   finishedMark: {fileID: 1888904179}

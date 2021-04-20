@@ -303,6 +303,63 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interact"",
+            ""id"": ""df719fd2-3e12-4a89-8da5-946115c4a126"",
+            ""actions"": [
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a0d39bb-7cbe-43be-a793-3bc309a90d71"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ffd60c8-9a11-407d-a53c-417205493fb1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""787a5a24-4e6c-4553-9bc3-22822ef401ac"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba743c3e-ee63-4436-afc5-a7514a234c5c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5f32f13-74fa-4bb9-b715-04128c195623"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -315,6 +372,10 @@ public class @MasterInput : IInputActionCollection, IDisposable
         m_PlayerShoot_Mouse = m_PlayerShoot.FindAction("Mouse", throwIfNotFound: true);
         m_PlayerShoot_Direction = m_PlayerShoot.FindAction("Direction", throwIfNotFound: true);
         m_PlayerShoot_Undo = m_PlayerShoot.FindAction("Undo", throwIfNotFound: true);
+        // Interact
+        m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
+        m_Interact_Cancel = m_Interact.FindAction("Cancel", throwIfNotFound: true);
+        m_Interact_Confirm = m_Interact.FindAction("Confirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -442,6 +503,47 @@ public class @MasterInput : IInputActionCollection, IDisposable
         }
     }
     public PlayerShootActions @PlayerShoot => new PlayerShootActions(this);
+
+    // Interact
+    private readonly InputActionMap m_Interact;
+    private IInteractActions m_InteractActionsCallbackInterface;
+    private readonly InputAction m_Interact_Cancel;
+    private readonly InputAction m_Interact_Confirm;
+    public struct InteractActions
+    {
+        private @MasterInput m_Wrapper;
+        public InteractActions(@MasterInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Cancel => m_Wrapper.m_Interact_Cancel;
+        public InputAction @Confirm => m_Wrapper.m_Interact_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_Interact; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractActions set) { return set.Get(); }
+        public void SetCallbacks(IInteractActions instance)
+        {
+            if (m_Wrapper.m_InteractActionsCallbackInterface != null)
+            {
+                @Cancel.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnCancel;
+                @Confirm.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
+            }
+            m_Wrapper.m_InteractActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+            }
+        }
+    }
+    public InteractActions @Interact => new InteractActions(this);
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -451,5 +553,10 @@ public class @MasterInput : IInputActionCollection, IDisposable
         void OnMouse(InputAction.CallbackContext context);
         void OnDirection(InputAction.CallbackContext context);
         void OnUndo(InputAction.CallbackContext context);
+    }
+    public interface IInteractActions
+    {
+        void OnCancel(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
     }
 }
