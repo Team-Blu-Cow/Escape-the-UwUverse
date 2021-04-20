@@ -6,6 +6,7 @@ public class Room : MonoBehaviour
 {
     private RoomController m_controller;
 
+    [HideInInspector]
     public bool m_focused = false;
 
     // Start is called before the first frame update
