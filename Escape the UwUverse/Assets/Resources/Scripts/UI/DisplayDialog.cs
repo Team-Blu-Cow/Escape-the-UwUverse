@@ -16,8 +16,12 @@ public class DisplayDialog : MonoBehaviour
     bool typing = false;
     string currentSentance;
 
+    [SerializeField] int maxHeight;
+    [SerializeField] int minHeight;
+
     [SerializeField] TextMeshProUGUI activeName;
     [SerializeField] Image characterSprite;
+    [SerializeField] Image finishedMark;
 
     // Start is called before the first frame update
     void Start()
@@ -25,20 +29,29 @@ public class DisplayDialog : MonoBehaviour
         sentances = new Queue<string>();
         delays = new Queue<float>();
         tmp = GetComponentInChildren<TextMeshProUGUI>();
-
-        string[] text = new string[1];
-        float[] delay = new float[1];
-
-        text[0] = "test";
-        delay[0] = 0.5f;
-
-        StartDialog(text, delay, "JackL");
     }
 
+    private void Update()
+    {
+        if (Keyboard.current.spaceKey.isPressed)
+        {
+            string[] text = new string[1];
+            float[] delay = new float[1];
+
+            text[0] = "test";
+            delay[0] = 0.1f;
+
+            StartDialog(text, delay, "Jack");
+        }
+
+        if (Keyboard.current.enterKey.isPressed)
+        {
+            EndDialog();
+        }
+    }
     private void Awake()
     {
         //controls = new MasterInput();
-        //Keyboard.current.spaceKey;
         //controls.PlayerControls.Dialogue.performed += ctx => DialougeSkip();
     }
 
@@ -58,15 +71,14 @@ public class DisplayDialog : MonoBehaviour
         characterSprite.enabled = false;
 
         sentances.Clear();
+        delays.Clear();
 
-        LeanTween.move(gameObject, new Vector3(transform.position.x, -100,0), 1);
-
-        foreach(string sentance in customDialog)
+        foreach (string sentance in customDialog)
         {
             sentances.Enqueue(sentance);
         }
-        
-        foreach(float delay in textDelay)
+
+        foreach (float delay in textDelay)
         {
             delays.Enqueue(delay);
         }
@@ -75,6 +87,8 @@ public class DisplayDialog : MonoBehaviour
         {
             delays.Enqueue(textDelay[0]);
         }
+
+        LeanTween.move(gameObject, new Vector3(transform.position.x, maxHeight, 0), 1);
 
         DisplayNextSentance();
     }
@@ -86,7 +100,7 @@ public class DisplayDialog : MonoBehaviour
 
         activeName.text = name;
         string path = "GFX/DialogueSprites/" + name;
-        characterSprite.sprite = Resources.Load<Sprite>(path) ;
+        characterSprite.sprite = Resources.Load<Sprite>(path);
 
         if (characterSprite.sprite == null)
         {
@@ -95,9 +109,8 @@ public class DisplayDialog : MonoBehaviour
         }
 
         sentances.Clear();
-
-        LeanTween.move(gameObject, new Vector3(transform.position.x, -100,0), 1);
-
+        delays.Clear();
+        
         foreach(string sentance in customDialog)
         {
             sentances.Enqueue(sentance);
@@ -113,14 +126,16 @@ public class DisplayDialog : MonoBehaviour
             delays.Enqueue(textDelay[0]);
         }
 
-        DisplayNextSentance();
+        LeanTween.move(gameObject, new Vector3(transform.position.x, maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
+            
+        //DisplayNextSentance();
     }
 
     void DisplayNextSentance()
     {
         if (sentances.Count == 0)
         {
-            EndDialog();
+            //EndDialog();
         }
         else
         {
@@ -146,18 +161,20 @@ public class DisplayDialog : MonoBehaviour
 
     void EndDialog()
     {
-        LeanTween.move(gameObject, new Vector3(transform.position.x, -490, 0), 1);
+        LeanTween.move(gameObject, new Vector3(transform.position.x, minHeight, 0), 1);
     }
 
     IEnumerator TypeSentance(string sentance, float delay)
     {
         typing = true;
+        finishedMark.enabled = false;
         tmp.text = "";
         foreach(char letter in sentance.ToCharArray())
         {
             tmp.text += letter;
             yield return new WaitForSeconds(delay);
         }
+        finishedMark.enabled = true;
         typing = false;
     }
 }
