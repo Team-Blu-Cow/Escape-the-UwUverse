@@ -81,6 +81,9 @@ public class RoomController : MonoBehaviour
     {
         //Vector3 cameraPos = Camera.main.transform.position;
         //
+        if (m_player == null || m_closest == null)
+            return;
+
         Vector3 diff = m_player.transform.position - m_closest.transform.position;
         diff = new Vector3(diff.x * 0.1f, diff.y * 0.1f, 0);
 
