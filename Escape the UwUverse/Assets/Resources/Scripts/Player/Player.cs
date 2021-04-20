@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
 
     private Vector2Int DirectionFromMouse()
     {
-        Vector2 directionf = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
+        Vector2 directionf = GameController.Instance.camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
         directionf.Normalize();
         Vector2Int directioni = Vector2Int.RoundToInt(directionf);
         return directioni;
