@@ -12,6 +12,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Idle",
+                    "type": "Button",
+                    "id": "9fa310f3-5585-4df6-9290-74cf90e036a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -124,6 +132,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d5345743-102e-4579-ac44-60dc5344a04f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Idle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -326,8 +345,19 @@
                 },
                 {
                     "name": "",
-                    "id": "ba743c3e-ee63-4436-afc5-a7514a234c5c",
-                    "path": "<Keyboard>/space",
+                    "id": "2168459f-ed5e-4685-b5b4-9079c358b373",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5f32f13-74fa-4bb9-b715-04128c195623",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -337,8 +367,8 @@
                 },
                 {
                     "name": "",
-                    "id": "f5f32f13-74fa-4bb9-b715-04128c195623",
-                    "path": "<Keyboard>/enter",
+                    "id": "889248e0-8f54-43c1-b5b1-6205ba22ca2c",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -19,11 +19,19 @@ public class bullet : MonoBehaviour
 
     private void Awake()
     {
-        Player.m_PlayerMoved += Move;
+        GameController.StepController().PreStepEvent += BeginStep;
+        GameController.StepController().StepEvent += Move;
         in_grid = GameObject.Find("Grid").GetComponent<TileGrid>();
+
+        GameController.StepController().AddEntity();
     }
 
-    private void Move()
+    public void BeginStep()
+    {
+        GameController.StepController().ApplyMove();
+    }
+
+    public void Move()
     {
         GridNode targetNode = m_currentNode.GetNeighbour(m_direction);
 
@@ -46,7 +54,11 @@ public class bullet : MonoBehaviour
     {
         m_currentNode.RemoveObject(gameObject);
         Debug.Log("bullet destroyed");
-        Player.m_PlayerMoved -= Move;
+        //Player.m_PlayerMoved -= Move;
+        GameController.StepController().PreStepEvent -= BeginStep;
+        GameController.StepController().StepEvent -= Move;
+        //GameController.StepController().AddEntity(); // silly goose @jay :3
+        GameController.StepController().RemoveEntity();
         Destroy(gameObject);
     }
 }
