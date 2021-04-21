@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UwUverse;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     private Vector2Int m_gridPosition = Vector2Int.zero;
     private Vector2Int m_shotDirection = Vector2Int.zero;
     private MasterInput m_input;
+    private Vector2Int m_inDirection;
 
     private bool m_hasShot = false;
 
@@ -27,10 +29,19 @@ public class Player : MonoBehaviour
         }
 
         m_input = new MasterInput();
-        m_input.PlayerMovement.Move.performed += ctx => Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
+        m_input.PlayerMovement.Move.performed += ctx => BeginStep(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));//Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
         m_input.PlayerShoot.Direction.performed += ctx => SetShot(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
         m_input.PlayerShoot.Mouse.performed += ctx => SetShot(DirectionFromMouse());
         m_input.PlayerShoot.Undo.performed += ctx => UndoShot();
+
+        GameController.StepController().StepEvent += Step;
+        GameController.StepController().AddEntity();
+    }
+
+    private void OnDestroy()
+    {
+        GameController.StepController().RemoveEntity();
+        GameController.StepController().StepEvent -= Step;
     }
 
     // Start is called before the first frame update
@@ -49,6 +60,18 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         m_input.Disable();
+    }
+
+    public void BeginStep(Vector2Int in_vector)
+    {
+        m_inDirection = in_vector;
+        GameController.Instance.stepController.BeginStep();
+        GameController.StepController().ApplyMove();
+    }
+
+    public void Step()
+    {
+        Move(m_inDirection);
     }
 
     private void Move(Vector2Int direction)

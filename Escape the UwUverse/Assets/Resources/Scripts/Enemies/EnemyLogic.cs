@@ -44,12 +44,13 @@ namespace UwUverse
         public int m_currentPathNode = 0;
         public bool m_isDead = false;
 
+        private IEnemyAction m_currentAction;
+
         public Vector2[] path
         {
             get { return m_path; }
             set { path = value; }
         }
-
 
         virtual public void SetActions() { }
 
@@ -60,10 +61,16 @@ namespace UwUverse
             m_currentPathNode = 0;
         }
 
+        virtual public void PreStep()
+        {
+            m_currentAction = m_actionQueue.NextAction();
+            m_currentAction.CalculateStep();
+        }
+
         virtual public void Step()
         {
             // do this at the end of the step
-            m_actionQueue.NextAction().ExecuteAction(null, null, this, null);
+            m_currentAction.ExecuteStep(null, null, this, null);
         }
 
         virtual public void CheckIfDead() { }

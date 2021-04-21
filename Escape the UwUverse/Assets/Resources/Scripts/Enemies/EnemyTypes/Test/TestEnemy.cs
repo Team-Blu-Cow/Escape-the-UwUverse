@@ -37,7 +37,7 @@ namespace UwUverse
         {
             IEnemyAction action = m_actionQueue.NextAction();
 
-            action.ExecuteAction(null, null, this, null);
+            action.ExecuteStep(null, null, this, null);
 
             if (action.id != (Int32)ActionIDS.BlockAction)
                 CheckIfDead();

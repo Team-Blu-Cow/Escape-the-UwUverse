@@ -14,7 +14,12 @@ namespace UwUverse
             set { m_id = value; }
         }
 
-        public void ExecuteAction(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
+        public void CalculateStep()
+        {
+
+        }
+
+        public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
             if (me.position == me.currentNode.m_grid.GetNearestNode(me.path[(me.m_currentPathNode + 1) % me.path.Length]).position)
             {
