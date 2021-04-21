@@ -32,6 +32,11 @@ namespace UwUverse
         [SerializeField] protected ActionQueue m_actionQueue;
 
         private GridNode m_currentNode;
+        public Vector3 m_targetPosition;
+        //public Vector2 m_currentGridPos;
+        //public Vector2 m_nextNodeGridPos;
+        //public Vector2Int m_debugVector;
+
 
         public Vector2Int position{get { return m_currentNode.position;}}
         public GridNode currentNode 
@@ -40,17 +45,28 @@ namespace UwUverse
             set { m_currentNode = value; }
         }
 
+        [SerializeField] private Vector2[] m_path;
+        public int m_currentPathNode = 0;
+
+        public Vector2[] path
+        {
+            get { return m_path; }
+            set { path = value; }
+        }
+
+
         virtual public void SetActions() { }
 
-        public void Initialise()
+        virtual public void Initialise()
         {
             SetActions();
             m_actionQueue.AssignQueue();
+            m_currentPathNode = 0;
         }
 
         public void Step()
         {
-            m_actionQueue.NextAction().RunAction(null, null, this, null);
+            m_actionQueue.NextAction().ExecuteAction(null, null, this, null);
         }
     }
 }
