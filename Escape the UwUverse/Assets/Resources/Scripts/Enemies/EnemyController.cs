@@ -55,7 +55,8 @@ namespace UwUverse
         {
             m_brain.PreStep();
             Debug.Log("beginStep");
-            StartCoroutine(DebugWait());
+            //StartCoroutine(DebugWait());
+            GameController.StepController().ApplyMove();
         }
 
         IEnumerator DebugWait()

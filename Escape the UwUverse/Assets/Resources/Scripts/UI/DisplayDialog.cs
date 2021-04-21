@@ -17,9 +17,6 @@ namespace UwUverse
         private bool m_typing = false;
         private string m_currentSentance;
 
-        [SerializeField] private int in_maxHeight;
-        [SerializeField] private int in_minHeight;
-
         [SerializeField] private TextMeshProUGUI in_activeName;
         [SerializeField] private Image in_characterSprite;
         [SerializeField] private Image in_finishedMark;
@@ -79,7 +76,7 @@ namespace UwUverse
                 m_delays.Enqueue(0);
             }
 
-            LeanTween.move(gameObject, new Vector3(transform.position.x, in_maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
+            LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 1, 1).setOnComplete(DisplayNextSentance);
         }
 
         public void StartDialog(string[] customDialog, float[] textDelay, string name)
@@ -117,7 +114,7 @@ namespace UwUverse
                 m_delays.Enqueue(textDelay[0]);
             }
 
-            LeanTween.move(gameObject, new Vector3(transform.position.x, in_maxHeight, 0), 1).setOnComplete(DisplayNextSentance);
+            LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 1, 1).setOnComplete(DisplayNextSentance);
         }
 
         private void DisplayNextSentance()
@@ -151,7 +148,7 @@ namespace UwUverse
 
         private void EndDialog()
         {
-            LeanTween.move(gameObject, new Vector3(transform.position.x, in_minHeight, 0), 1);
+            LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 0, 1);
         }
 
         private IEnumerator TypeSentance(string sentance, float delay)
