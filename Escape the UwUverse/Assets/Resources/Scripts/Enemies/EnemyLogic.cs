@@ -67,7 +67,6 @@ namespace UwUverse
         }
 
         virtual public void CheckIfDead() { }
-
         virtual public void KillEnemy() { }
     }
 }

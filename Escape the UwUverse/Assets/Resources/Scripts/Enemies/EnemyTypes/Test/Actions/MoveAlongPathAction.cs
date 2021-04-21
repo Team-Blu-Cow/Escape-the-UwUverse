@@ -26,23 +26,8 @@ namespace UwUverse
 
             Vector2 dir = (Mathf.Abs(dirX) > Mathf.Abs(dirY)) ? new Vector2(Mathf.Sign(dirX), 0) : new Vector2(0, Mathf.Sign(dirY));
 
-            if(me.currentNode.HasObjectOfType<bullet>())
-            {
-                me.m_isDead = true;
-                return;
-            }
-
             cur_node = me.currentNode;
             tar_node = cur_node.GetNeighbour(Vector2Int.RoundToInt(dir));
-
-            if (tar_node.HasObjectOfType<bullet>())
-            {
-                me.m_isDead = true;
-                GameObject obj = null;
-                tar_node.HasObjectOfType<bullet>(ref obj);
-                obj.GetComponent<bullet>().BulletDestroy();
-                return;
-            }
 
             me.currentNode.RemoveObject(me.gameObject);
             me.currentNode = tar_node;

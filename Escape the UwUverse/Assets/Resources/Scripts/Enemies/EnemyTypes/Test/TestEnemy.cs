@@ -43,5 +43,13 @@ namespace UwUverse
                 CheckIfDead();
             //base.Step();
         }
+
+        public override void CheckIfDead()
+        {
+            // steps:
+
+            // 1: check current node
+            // 2: check node that is being moved to for a bullet
+        }
     }
 }
