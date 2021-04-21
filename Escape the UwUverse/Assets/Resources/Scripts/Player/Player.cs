@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
         m_input = new MasterInput();
         m_input.PlayerMovement.Move.performed += ctx => BeginStep(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));//Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
+        m_input.PlayerMovement.Idle.performed += ctx => BeginStep(Vector2Int.zero);
         m_input.PlayerShoot.Direction.performed += ctx => SetShot(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
         m_input.PlayerShoot.Mouse.performed += ctx => SetShot(DirectionFromMouse());
         m_input.PlayerShoot.Undo.performed += ctx => UndoShot();
@@ -82,10 +83,6 @@ public class Player : MonoBehaviour
             GameController.StepController().ApplyMove();
             GameController.Instance.stepController.BeginStep();
         }
-    }
-
-    public void PreStep()
-    {
     }
 
     private void Move()

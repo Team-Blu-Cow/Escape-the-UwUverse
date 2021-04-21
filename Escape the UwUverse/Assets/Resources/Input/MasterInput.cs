@@ -25,6 +25,14 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Idle"",
+                    ""type"": ""Button"",
+                    ""id"": ""9fa310f3-5585-4df6-9290-74cf90e036a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -137,6 +145,17 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5345743-102e-4579-ac44-60dc5344a04f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Idle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -339,8 +358,19 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ba743c3e-ee63-4436-afc5-a7514a234c5c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""2168459f-ed5e-4685-b5b4-9079c358b373"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5f32f13-74fa-4bb9-b715-04128c195623"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -350,8 +380,8 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f5f32f13-74fa-4bb9-b715-04128c195623"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""id"": ""889248e0-8f54-43c1-b5b1-6205ba22ca2c"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -367,6 +397,7 @@ public class @MasterInput : IInputActionCollection, IDisposable
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
+        m_PlayerMovement_Idle = m_PlayerMovement.FindAction("Idle", throwIfNotFound: true);
         // PlayerShoot
         m_PlayerShoot = asset.FindActionMap("PlayerShoot", throwIfNotFound: true);
         m_PlayerShoot_Mouse = m_PlayerShoot.FindAction("Mouse", throwIfNotFound: true);
@@ -426,11 +457,13 @@ public class @MasterInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PlayerMovement;
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_Move;
+    private readonly InputAction m_PlayerMovement_Idle;
     public struct PlayerMovementActions
     {
         private @MasterInput m_Wrapper;
         public PlayerMovementActions(@MasterInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMovement_Move;
+        public InputAction @Idle => m_Wrapper.m_PlayerMovement_Idle;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -443,6 +476,9 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMove;
+                @Idle.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
+                @Idle.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
+                @Idle.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -450,6 +486,9 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Idle.started += instance.OnIdle;
+                @Idle.performed += instance.OnIdle;
+                @Idle.canceled += instance.OnIdle;
             }
         }
     }
@@ -547,6 +586,7 @@ public class @MasterInput : IInputActionCollection, IDisposable
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnIdle(InputAction.CallbackContext context);
     }
     public interface IPlayerShootActions
     {
