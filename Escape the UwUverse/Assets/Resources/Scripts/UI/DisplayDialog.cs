@@ -33,12 +33,6 @@ namespace UwUverse
 
         private void Awake()
         {
-            string[] text = new string[1];
-            float[] delay = new float[1];
-
-            text[0] = "test";
-            delay[0] = 0.1f;
-
             m_controls = new MasterInput();
             m_controls.Interact.Confirm.performed += ctx => DialougeSkip();
             m_controls.Interact.Cancel.performed += ctx => EndDialog();
