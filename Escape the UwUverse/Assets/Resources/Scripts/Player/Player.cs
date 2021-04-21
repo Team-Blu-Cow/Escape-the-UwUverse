@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         m_currentNode = in_grid.GetNearestNode(transform.position);
+        m_currentNode.AddObject(gameObject);
         m_gridPosition = m_currentNode.position;
     }
 
@@ -50,30 +51,27 @@ public class Player : MonoBehaviour
         m_input.Disable();
     }
 
-    private void Update()
-    {
-        transform.position = in_grid.GridCoordToWorldCoord(m_gridPosition);
-    }
-
     private void Move(Vector2Int direction)
     {
         GridNode targetNode = m_currentNode.GetNeighbour(direction);
 
-        if (!targetNode.isWall && targetNode != null)
+        if (targetNode != null && !targetNode.isWall && !targetNode.isHole)
         {
             if (m_hasShot)
             {
-                if (m_shotDirection == direction)
-                    Shoot(m_currentNode.GetNeighbour(m_shotDirection));
-                else
-                    Shoot(m_currentNode);
+                if (m_shotDirection == direction && !m_currentNode.GetNeighbour(m_shotDirection).HasObject<bullet>())  // TODO @me:
+                    Shoot(m_currentNode.GetNeighbour(m_shotDirection));                                                //   fix this <3
+                else if (!m_currentNode.HasObject<bullet>() && !m_currentNode.HasObject<Player>())                     //  its broken
+                    Shoot(m_currentNode);                                                                              //       thanks
 
                 m_hasShot = false;
             }
 
+            m_currentNode.RemoveObject(gameObject);
             m_gridPosition = targetNode.position;
             m_currentNode = targetNode;
-
+            m_currentNode.AddObject(gameObject);
+            LeanTween.move(gameObject, in_grid.GridCoordToWorldCoord(m_currentNode.position), 0.1f);
             m_PlayerMoved?.Invoke();
         }
     }
@@ -101,7 +99,7 @@ public class Player : MonoBehaviour
 
     private Vector2Int DirectionFromMouse()
     {
-        Vector2 directionf = GameController.Instance.camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
+        Vector2 directionf = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
         directionf.Normalize();
         Vector2Int directioni = Vector2Int.RoundToInt(directionf);
         return directioni;
