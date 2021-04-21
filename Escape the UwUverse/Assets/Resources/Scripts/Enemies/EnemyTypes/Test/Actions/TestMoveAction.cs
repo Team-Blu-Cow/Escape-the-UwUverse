@@ -13,12 +13,10 @@ namespace UwUverse
                 me.m_currentPathNode = (me.m_currentPathNode + 1) % me.path.Length;
             }
 
-            Vector2 dir = Vector2.zero;
-
             float dirX = me.path[(me.m_currentPathNode + 1) % me.path.Length].x - me.path[me.m_currentPathNode % me.path.Length].x;
             float dirY = me.path[(me.m_currentPathNode + 1) % me.path.Length].y - me.path[me.m_currentPathNode % me.path.Length].y;
 
-            dir = new Vector2(dirX, dirY).normalized;
+            Vector2 dir = (Mathf.Abs(dirX) > Mathf.Abs(dirY)) ? new Vector2(Mathf.Sign(dirX), 0) : new Vector2(0, Mathf.Sign(dirY));
 
             cur_node = me.currentNode;
             tar_node = cur_node.GetNeighbour(Vector2Int.RoundToInt(dir));
