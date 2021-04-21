@@ -52,6 +52,9 @@ public class GridNode
         get { return new Vector2Int(x, y); }
     }
 
+    public Vector3 worldPosition
+    { get { return m_grid.GridCoordToWorldCoord(x, y); } }
+
     public void AddObject(GameObject obj)
     {
         if (!m_objectsInNode.Contains(obj))
