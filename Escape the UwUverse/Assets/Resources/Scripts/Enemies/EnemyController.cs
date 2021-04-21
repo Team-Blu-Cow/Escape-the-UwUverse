@@ -22,8 +22,6 @@ namespace UwUverse
         {
             m_brain.Initialise();
 
-            
-
             if (m_brain.path.Length > 0)
             {
                 transform.position = in_grid.GridCoordToWorldCoord(in_grid.GetNearestNode(m_brain.path[0]).position);
@@ -34,6 +32,8 @@ namespace UwUverse
                 m_brain.currentNode = in_grid.GetNearestNode(transform.position);
                 transform.position = in_grid.GridCoordToWorldCoord(m_brain.position);
             }
+
+            m_brain.currentNode.AddObject(gameObject);
             m_brain.m_targetPosition = transform.position;
         }
 
@@ -50,6 +50,11 @@ namespace UwUverse
             m_brain.Step();
         }
 
+        public void OnDestroy()
+        {
+            m_brain.currentNode.RemoveObject(gameObject);
+            Player.m_PlayerMoved -= OnStep;
+        }
 
     }
 }

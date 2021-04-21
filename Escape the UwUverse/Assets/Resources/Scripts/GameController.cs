@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     { get { return m_camera; } }
 
     public Cinemachine.CinemachineVirtualCamera vCamera
-    { get { return m_camera.GetComponent<Cinemachine.CinemachineVirtualCamera>(); } }
+    { get { return m_camera.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>(); } }
 
     public static GameController Instance
     {

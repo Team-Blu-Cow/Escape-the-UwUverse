@@ -7,6 +7,7 @@ public class bullet : MonoBehaviour
     [HideInInspector] public Vector2Int m_direction = Vector2Int.zero;
     [HideInInspector] public TileGrid in_grid = null;
     [HideInInspector] public GridNode m_currentNode = null;
+    [HideInInspector] public bool m_hasMoved = false;
 
     public void createBullet(GridNode in_node, Vector2Int in_direction)
     {
@@ -26,19 +27,26 @@ public class bullet : MonoBehaviour
     {
         GridNode targetNode = m_currentNode.GetNeighbour(m_direction);
 
-        m_currentNode.RemoveObject(gameObject);
         if (targetNode != null && !targetNode.isWall)
         {
+            m_currentNode.RemoveObject(gameObject);
             m_currentNode = targetNode;
             m_currentNode.AddObject(gameObject);
 
+            m_hasMoved = true;
             LeanTween.move(gameObject, in_grid.GridCoordToWorldCoord(m_currentNode.position), 0.1f);
         }
         else
         {
-            Debug.Log("bullet destroyed");
-            Player.m_PlayerMoved -= Move;
-            Destroy(gameObject);
+            BulletDestroy();
         }
+    }
+
+    public void BulletDestroy()
+    {
+        m_currentNode.RemoveObject(gameObject);
+        Debug.Log("bullet destroyed");
+        Player.m_PlayerMoved -= Move;
+        Destroy(gameObject);
     }
 }

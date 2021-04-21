@@ -91,7 +91,6 @@ public class Player : MonoBehaviour
     }
 
     private void Shoot(GridNode in_Node)
-
     {
         GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/bullet"), Vector3.zero, Quaternion.identity);
         bullet.GetComponent<bullet>().createBullet(in_Node, m_shotDirection);
