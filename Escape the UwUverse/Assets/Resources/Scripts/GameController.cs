@@ -11,6 +11,9 @@ public class GameController : MonoBehaviour
     public Camera camera
     { get { return m_camera; } }
 
+    public Cinemachine.CinemachineVirtualCamera vCamera
+    { get { return m_camera.GetComponent<Cinemachine.CinemachineVirtualCamera>(); } }
+
     public static GameController Instance
     {
         get

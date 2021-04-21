@@ -1,10 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+    public static event Action SceneSwitch;
+
     private Animator transition;
     [SerializeField] [Range(1, 100)] private float transitionTime = 1f;
 
@@ -22,6 +24,7 @@ public class LevelLoader : MonoBehaviour
     {
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
+        SceneSwitch?.Invoke();
         SceneManager.LoadScene(in_Scene);
     }
 

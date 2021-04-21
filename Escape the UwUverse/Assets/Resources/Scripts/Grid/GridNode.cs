@@ -68,9 +68,20 @@ public class GridNode
         m_objectsInNode.Remove(obj);
     }
 
-    public bool HasObject(GameObject obj)
+    public bool HasObjectOfType(GameObject obj)
     {
         return m_objectsInNode.Contains(obj);
+    }
+    public bool HasObjectOfType<T>()
+    {
+        foreach (GameObject obj in m_objectsInNode)
+        {
+            if(obj != null && obj.GetComponent<T>() != null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<GameObject> AllObjects()

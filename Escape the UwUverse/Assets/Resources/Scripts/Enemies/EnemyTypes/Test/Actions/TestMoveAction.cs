@@ -24,7 +24,7 @@ namespace UwUverse
             me.currentNode = tar_node;
             me.m_targetPosition = tar_node.worldPosition;
 
-            me.gameObject.GetComponent<EnemyController>().StartCoroutine(SmoothMove(0.4f, me));
+            me.gameObject.GetComponent<EnemyController>().StartCoroutine(SmoothMove(0.2f, me));
         }
 
         public IEnumerator SmoothMove(float duration, EnemyLogic me)

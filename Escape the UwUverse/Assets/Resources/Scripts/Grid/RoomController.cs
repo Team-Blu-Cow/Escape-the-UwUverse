@@ -9,9 +9,6 @@ public class RoomController : MonoBehaviour
     private GameObject m_closest;
     private GameObject m_player;
 
-    [SerializeField]
-    private Cinemachine.CinemachineVirtualCamera cam;
-
     private GameObject camLookPoint = null;
 
     private void Awake()
@@ -91,8 +88,7 @@ public class RoomController : MonoBehaviour
 
         camLookPoint.transform.position = target;
 
-        cam.Follow = camLookPoint.transform;
-
+        GameController.Instance.vCamera.Follow = camLookPoint.transform;
         //cameraPos = Vector3.Lerp(cameraPos, target, 0.05f);
         //Camera.main.transform.position = cameraPos;
     }

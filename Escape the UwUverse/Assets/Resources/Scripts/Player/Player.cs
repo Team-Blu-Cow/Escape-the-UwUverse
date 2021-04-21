@@ -59,9 +59,9 @@ public class Player : MonoBehaviour
         {
             if (m_hasShot)
             {
-                if (m_shotDirection == direction && !m_currentNode.GetNeighbour(m_shotDirection).HasObject<bullet>())  // TODO @me:
+                if (m_shotDirection == direction && !m_currentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>())  // TODO @me:
                     Shoot(m_currentNode.GetNeighbour(m_shotDirection));                                                //   fix this <3
-                else if (!m_currentNode.HasObject<bullet>() && !m_currentNode.HasObject<Player>())                     //  its broken
+                else if (!m_currentNode.HasObjectOfType<bullet>() && !m_currentNode.HasObjectOfType<Player>())                     //  its broken
                     Shoot(m_currentNode);                                                                              //       thanks
 
                 m_hasShot = false;
