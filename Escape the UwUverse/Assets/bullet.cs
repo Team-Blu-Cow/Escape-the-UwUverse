@@ -55,9 +55,9 @@ public class bullet : MonoBehaviour
         m_currentNode.RemoveObject(gameObject);
         Debug.Log("bullet destroyed");
         //Player.m_PlayerMoved -= Move;
-        GameController.StepController().PreStepEvent -= BeginStep;
-        GameController.StepController().StepEvent -= Move;
         //GameController.StepController().AddEntity(); // silly goose @jay :3
+        GameController.StepController().PreStepEvent    -= BeginStep;
+        GameController.StepController().StepEvent       -= Move;
         GameController.StepController().RemoveEntity();
         Destroy(gameObject);
     }

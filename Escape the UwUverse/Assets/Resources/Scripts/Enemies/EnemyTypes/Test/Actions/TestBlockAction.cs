@@ -15,7 +15,7 @@ namespace UwUverse
             set { m_id = value; }
         }
 
-        public void CalculateStep()
+        public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
 
         }

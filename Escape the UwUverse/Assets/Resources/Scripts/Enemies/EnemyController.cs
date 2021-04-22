@@ -54,22 +54,11 @@ namespace UwUverse
         public void OnBeginStep()
         {
             m_brain.PreStep();
-            Debug.Log("beginStep");
-            //StartCoroutine(DebugWait());
-            GameController.StepController().ApplyMove();
-        }
-
-        IEnumerator DebugWait()
-        {
-            yield return new WaitForSeconds(1f);
-            //GameController.Instance.stepController.ApplyMove();
-            GameController.StepController().ApplyMove();
         }
 
         public void OnStep()
         {
             m_brain.Step();
-            Debug.Log("Step");
         }
 
         public void OnDestroy()
