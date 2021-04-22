@@ -10,12 +10,6 @@ namespace UwUverse
         public event Action PreStepEvent;
         public event Action StepEvent;
 
-        /*public delegate void PreStepDelegate();
-        public event PreStepDelegate PreStepEvent;
-
-        public delegate void StepDelegate();
-        public event StepDelegate StepEvent;//*/
-
         public void BeginStep() => PreStepEvent?.Invoke();
 
         [SerializeField] private int m_entityCount   = 0;
@@ -33,20 +27,13 @@ namespace UwUverse
         public void ApplyMove()     => m_entitiesMoved++;
         public void ClearMoves()    => m_entitiesMoved = 0;
 
-        public StepController()
-        {
-            Initialise();
-        }
-
-        ~StepController()
-        {
-            PreStepEvent -= PreStep;
-        }
+        public StepController()     => Initialise();
+        ~StepController()           => PreStepEvent -= PreStep;
 
         public void Initialise()
         {
-            PreStepEvent += PreStep;
-            int m_entityCount = 0;
+            PreStepEvent        += PreStep;
+            int m_entityCount   = 0;
             int m_entitiesMoved = 0;
         }
 

@@ -58,7 +58,7 @@ public class bullet : MonoBehaviour
         //Player.m_PlayerMoved -= Move;
         GameController.StepController().PreStepEvent    -= BeginStep;
         GameController.StepController().StepEvent       -= Move;
-        GameController.StepController().AddEntity();
+        GameController.StepController().RemoveEntity();
         Destroy(gameObject);
     }
 }

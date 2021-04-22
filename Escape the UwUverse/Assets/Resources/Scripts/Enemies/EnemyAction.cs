@@ -13,7 +13,7 @@ namespace UwUverse
             set;
         }
 
-        public void CalculateStep();
+        public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target);
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target);
     }

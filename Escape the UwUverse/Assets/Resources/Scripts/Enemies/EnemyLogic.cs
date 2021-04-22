@@ -28,10 +28,14 @@ namespace UwUverse
     }
 
     public class EnemyLogic : MonoBehaviour
-    { 
+    {
+#if UNITY_EDITOR
+        public bool drawPathGizmo;
+        public bool drawDangerSquares;
+#endif
         [SerializeField] protected ActionQueue m_actionQueue;
 
-        private GridNode m_currentNode;
+        protected GridNode m_currentNode;
         public Vector3 m_targetPosition;
         public Vector2Int position{get { return m_currentNode.position;}}
         public GridNode currentNode 
@@ -40,11 +44,11 @@ namespace UwUverse
             set { m_currentNode = value; }
         }
 
-        [SerializeField] private Vector2[] m_path;
+        [SerializeField] protected Vector2[] m_path;
         public int m_currentPathNode = 0;
         public bool m_isDead = false;
 
-        private IEnemyAction m_currentAction;
+        protected IEnemyAction m_currentAction;
 
         public Vector2[] path
         {
@@ -64,7 +68,7 @@ namespace UwUverse
         virtual public void PreStep()
         {
             m_currentAction = m_actionQueue.NextAction();
-            m_currentAction.CalculateStep();
+            m_currentAction.CalculateStep(null, null, this, null);
         }
 
         virtual public void Step()
