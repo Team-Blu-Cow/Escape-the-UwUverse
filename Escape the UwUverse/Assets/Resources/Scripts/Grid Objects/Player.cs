@@ -5,24 +5,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UwUverse;
 
-public class Player : MonoBehaviour
+public class Player : GridEntity
 {
-    private TileGrid in_grid;
-
-    private GridNode m_currentNode;
-    private GridNode m_targetNode;
-    private Vector2Int m_gridPosition = Vector2Int.zero;
     private Vector2Int m_shotDirection = Vector2Int.zero;
     private MasterInput m_input;
-    private Vector2Int m_inDirection;
 
     private bool m_hasShot = false;
 
     private void Awake()
     {
-        in_grid = GameObject.Find("Grid").GetComponent<TileGrid>();
+        m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
 
-        if (in_grid == null)
+        if (m_gridRef == null)
         {
             Debug.LogError("No grid could be found in scene, wrong name in hierarchy maybe?");
         }
@@ -47,9 +41,8 @@ public class Player : MonoBehaviour
         GameController.StepController().StepEvent += Move;
         GameController.StepController().AddEntity();
 
-        m_currentNode = in_grid.GetNearestNode(transform.position);
-        m_currentNode.AddObject(gameObject);
-        m_gridPosition = m_currentNode.position;
+        CurrentNode = m_gridRef.GetNearestNode(transform.position);
+        CurrentNode.AddObject(gameObject);
     }
 
     private void OnEnable()
@@ -64,18 +57,18 @@ public class Player : MonoBehaviour
 
     public void BeginStep(Vector2Int direction)
     {
-        m_targetNode = m_currentNode.GetNeighbour(direction);
+        TargetNode = CurrentNode.GetNeighbour(direction);
 
-        if (m_targetNode != null && !m_targetNode.isWall && !m_targetNode.isHole)
+        if (TargetNode != null && !TargetNode.isWall && !TargetNode.isHole)
         {
             if (m_hasShot)
             {
                 // shoot if: node had no bullets already, wont be occupied by the player or a wall next step
 
-                if (m_shotDirection == direction && !m_currentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>())  // TODO @me:
-                    Shoot(m_currentNode.GetNeighbour(m_shotDirection));                                             //   fix this <3
-                else if (!m_currentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>() && !m_currentNode.HasObjectOfType<bullet>())                     //  its broken
-                    Shoot(m_currentNode);                                                                              //       thanks
+                if (m_shotDirection == direction && !CurrentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>())  // TODO @me:
+                    Shoot(CurrentNode.GetNeighbour(m_shotDirection));                                             //   fix this <3
+                else if (!CurrentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>() && !CurrentNode.HasObjectOfType<bullet>())                     //  its broken
+                    Shoot(CurrentNode);                                                                              //       thanks
 
                 m_hasShot = false;
             }
@@ -87,11 +80,10 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        m_currentNode.RemoveObject(gameObject);
-        m_gridPosition = m_targetNode.position;
-        m_currentNode = m_targetNode;
-        m_currentNode.AddObject(gameObject);
-        LeanTween.move(gameObject, in_grid.GridCoordToWorldCoord(m_currentNode.position), 0.1f);
+        CurrentNode.RemoveObject(gameObject);
+        CurrentNode = TargetNode;
+        CurrentNode.AddObject(gameObject);
+        LeanTween.move(gameObject, m_gridRef.GridCoordToWorldCoord(CurrentNode.position), 0.1f);
     }
 
     private void SetShot(Vector2Int in_direction)
