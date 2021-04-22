@@ -33,11 +33,6 @@ namespace UwUverse
 
         private GridNode m_currentNode;
         public Vector3 m_targetPosition;
-        //public Vector2 m_currentGridPos;
-        //public Vector2 m_nextNodeGridPos;
-        //public Vector2Int m_debugVector;
-
-
         public Vector2Int position{get { return m_currentNode.position;}}
         public GridNode currentNode 
         {
@@ -47,13 +42,15 @@ namespace UwUverse
 
         [SerializeField] private Vector2[] m_path;
         public int m_currentPathNode = 0;
+        public bool m_isDead = false;
+
+        private IEnemyAction m_currentAction;
 
         public Vector2[] path
         {
             get { return m_path; }
             set { path = value; }
         }
-
 
         virtual public void SetActions() { }
 
@@ -64,9 +61,19 @@ namespace UwUverse
             m_currentPathNode = 0;
         }
 
-        public void Step()
+        virtual public void PreStep()
         {
-            m_actionQueue.NextAction().ExecuteAction(null, null, this, null);
+            m_currentAction = m_actionQueue.NextAction();
+            m_currentAction.CalculateStep();
         }
+
+        virtual public void Step()
+        {
+            // do this at the end of the step
+            m_currentAction.ExecuteStep(null, null, this, null);
+        }
+
+        virtual public void CheckIfDead() { }
+        virtual public void KillEnemy() { }
     }
 }

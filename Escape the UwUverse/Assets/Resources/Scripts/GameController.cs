@@ -1,4 +1,5 @@
 using UnityEngine;
+using UwUverse;
 
 public class GameController : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class GameController : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera vCamera
     { get { return m_camera.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>(); } }
+
+    [SerializeField] private StepController m_stepController;
+
+    public StepController stepController
+    { get { return m_stepController; } }
+
+    public static StepController StepController()
+    { return Instance.stepController; }
 
     public static GameController Instance
     {
@@ -33,6 +42,8 @@ public class GameController : MonoBehaviour
         }
 
         m_camera = GameObject.Find("Camera").GetComponent<Camera>();
+
+        m_stepController = new StepController();
     }
 
     private string m_applicationPath = null;
@@ -47,20 +58,5 @@ public class GameController : MonoBehaviour
             }
             return m_applicationPath;
         }
-    }
-
-    //private FileIO.UserData m_userData;
-
-    //public FileIO.UserData userData
-    //{
-    //    get { return m_userData; }
-    //    set { m_userData = value; }
-    //}
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        //m_applicationPath = Application.persistentDataPath;
-        //m_userData = new FileIO.UserData();
     }
 }

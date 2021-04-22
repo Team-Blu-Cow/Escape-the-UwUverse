@@ -84,6 +84,20 @@ public class GridNode
         return false;
     }
 
+    public bool HasObjectOfType<T>(ref GameObject out_obj)
+    {
+        foreach (GameObject obj in m_objectsInNode)
+        {
+            if (obj != null && obj.GetComponent<T>() != null)
+            {
+                out_obj = obj;
+                return true;
+            }
+        }
+        out_obj = null;
+        return false;
+    }
+
     public List<GameObject> AllObjects()
     {
         return m_objectsInNode;
