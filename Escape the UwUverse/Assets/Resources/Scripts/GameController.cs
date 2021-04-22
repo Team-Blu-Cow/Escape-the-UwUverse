@@ -6,6 +6,11 @@ public class GameController : MonoBehaviour
     // make game controller a singleton
     private static GameController _Instance;
 
+    private FileIO.UserData m_userData = null;
+
+    public FileIO.UserData userData
+    { get { return m_userData; } }
+
     [SerializeField]
     private Camera m_camera;
 
@@ -44,6 +49,7 @@ public class GameController : MonoBehaviour
         m_camera = GameObject.Find("Camera").GetComponent<Camera>();
 
         m_stepController = new StepController();
+        m_userData = new FileIO.UserData();
     }
 
     private string m_applicationPath = null;
