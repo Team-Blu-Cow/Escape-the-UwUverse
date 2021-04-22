@@ -45,10 +45,6 @@ namespace UwUverse
 
         private void Update()
         {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                OnStep();
-            }
         }
 
         public void OnBeginStep()

@@ -105,7 +105,8 @@ namespace UwUverse
             me.m_targetPosition = tar_node.worldPosition;
             me.currentNode.AddObject(me.gameObject);
 
-            me.gameObject.GetComponent<EnemyController>().StartCoroutine(SmoothMove(0.2f, me));
+            //me.gameObject.GetComponent<EnemyController>().StartCoroutine(SmoothMove(0.2f, me));
+            LeanTween.move(me.gameObject, GameObject.Find("Grid").GetComponent<TileGrid>().GridCoordToWorldCoord(me.currentNode.position), 0.1f);
         }
 
         public IEnumerator SmoothMove(float duration, EnemyLogic me)
