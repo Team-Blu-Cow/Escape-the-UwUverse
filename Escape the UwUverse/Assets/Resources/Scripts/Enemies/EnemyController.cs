@@ -9,20 +9,17 @@ namespace UwUverse
     {
         [SerializeField] public EnemyLogic m_brain;
 
-        private TileGrid m_gridRef;
-
         private void Awake()
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
 
-            //Player.m_PlayerMoved += OnStep;
             GameController.StepController().StepEvent += OnStep;
             GameController.StepController().PreStepEvent += OnBeginStep;
         }
 
         private void Start()
         {
-            m_brain.Initialise();
+            m_brain.Initialise(this);
 
             if (m_brain.path.Length > 0)
             {
@@ -36,9 +33,7 @@ namespace UwUverse
             }
 
             m_brain.currentNode.AddObject(gameObject);
-            m_brain.m_targetPosition = transform.position;
 
-            //GameController.Instance.stepController.AddEntity();
             GameController.StepController().AddEntity();
         }
 
@@ -59,10 +54,8 @@ namespace UwUverse
         public void OnDestroy()
         {
             m_brain.currentNode.RemoveObject(gameObject);
-            //Player.m_PlayerMoved -= OnStep;
             GameController.StepController().StepEvent -= OnStep;
             GameController.StepController().PreStepEvent -= OnBeginStep;
-            //GameController.Instance.stepController.RemoveEntity();
             GameController.StepController().RemoveEntity();
         }
     }

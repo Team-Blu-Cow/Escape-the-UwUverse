@@ -5,7 +5,7 @@ using System;
 
 namespace UwUverse
 {
-    public class TestEnemy : EnemyLogic
+    public class BlockingEnemy : EnemyLogic
     {
         public enum ActionIDS : Int32
         {
@@ -13,30 +13,33 @@ namespace UwUverse
             BlockAction = 2
         }
 
-        public override void Initialise()
+        public override void Initialise(EnemyController in_controller)
         {
-            base.Initialise();
+            base.Initialise(in_controller);
 
             //m_path = new EnemyPath();
         }
 
         public override void SetActions()
         {
-            m_actionQueue.m_actionList = new IEnemyAction[3];
+            m_actionQueue.m_actionList = new IEnemyAction[4];
             m_actionQueue.m_actionList[0] = new MoveAlongPathAction();
             m_actionQueue.m_actionList[0].id = (Int32)ActionIDS.MoveAction;
             m_actionQueue.m_actionList[1] = new MoveAlongPathAction();
             m_actionQueue.m_actionList[1].id = (Int32)ActionIDS.MoveAction;
             m_actionQueue.m_actionList[2] = new MoveAlongPathAction();
             m_actionQueue.m_actionList[2].id = (Int32)ActionIDS.MoveAction;
-            //m_actionQueue.m_actionList[3] = new TestBlockAction();
-            //m_actionQueue.m_actionList[3].id = (Int32)ActionIDS.BlockAction;
+            m_actionQueue.m_actionList[3] = new BlockAction();
+            m_actionQueue.m_actionList[3].id = (Int32)ActionIDS.BlockAction;
+            //m_actionQueue.m_actionList[0] = new TestBlockAction();
+            //m_actionQueue.m_actionList[0].id = (Int32)ActionIDS.BlockAction;
         }
 
         public override void PreStep()
         {
             m_currentAction = m_actionQueue.NextAction();
             m_currentAction.CalculateStep(null, null, this, null);
+            GameController.StepController().ApplyMove();
         }
 
         public override void Step()
@@ -76,7 +79,7 @@ namespace UwUverse
             {
                 int pathNodeIndex = m_currentPathNode;
 
-                if (currentNode != null && position == currentNode.m_grid.GetNearestNode(path[(m_currentPathNode + 1) % path.Length]).position)
+                if (m_controller != null && currentNode != null && position == currentNode.m_grid.GetNearestNode(path[(m_currentPathNode + 1) % path.Length]).position)
                     pathNodeIndex = (m_currentPathNode + 1) % path.Length;
 
 
@@ -96,7 +99,9 @@ namespace UwUverse
                 Gizmos.color = Color.red;
                 foreach(var offset in offsets)
                 {
-                    Gizmos.DrawWireCube(m_targetPosition + new Vector3(offset.x,offset.y,0), Vector3.one * 0.8f);
+                    //Gizmos.DrawWireCube(m_targetPosition + new Vector3(offset.x,offset.y,0), Vector3.one * 0.8f);
+                    if(m_controller != null && currentNode != null)
+                        Gizmos.DrawWireCube(currentNode.worldPosition + new Vector3(offset.x,offset.y,0), Vector3.one * 0.8f);
                 }
             }
         }

@@ -25,8 +25,6 @@ namespace UwUverse
 
             //Step 2: check if move is valid
             ValidateMove(me);
-
-            GameController.StepController().ApplyMove();
         }
 
         private void GetDirection(EnemyLogic me)
@@ -102,34 +100,9 @@ namespace UwUverse
 
             me.currentNode.RemoveObject(me.gameObject);
             me.currentNode = tar_node;
-            me.m_targetPosition = tar_node.worldPosition;
             me.currentNode.AddObject(me.gameObject);
 
-            //me.gameObject.GetComponent<EnemyController>().StartCoroutine(SmoothMove(0.2f, me));
             LeanTween.move(me.gameObject, GameObject.Find("Grid").GetComponent<TileGrid>().GridCoordToWorldCoord(me.currentNode.position), 0.1f);
-        }
-
-        public IEnumerator SmoothMove(float duration, EnemyLogic me)
-        {
-            float n = 0;
-
-            duration = (duration <= 0) ? 1 : duration;
-
-            Vector3 startPos = me.transform.position;
-
-            while (true)
-            {
-                n += Time.deltaTime;
-
-                if (n >= duration)
-                    break;
-
-                float m = JaysUnityUtils.JUtils.SmoothStep(0, duration, n);
-
-                me.transform.position = Vector3.Lerp(startPos, me.m_targetPosition, m);
-
-                yield return null;
-            }
         }
     }
 }
