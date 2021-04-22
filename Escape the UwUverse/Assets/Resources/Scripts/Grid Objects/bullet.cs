@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class bullet : GridEntity
 {
     [HideInInspector] public Vector2Int m_direction = Vector2Int.zero;
-    [HideInInspector] public TileGrid in_grid = null;
-    [HideInInspector] public GridNode m_currentNode = null;
     [HideInInspector] public bool m_hasMoved = false;
 
     public void createBullet(GridNode in_node, Vector2Int in_direction)
@@ -14,20 +12,21 @@ public class bullet : MonoBehaviour
         m_currentNode = in_node;
         m_currentNode.AddObject(gameObject);
         m_direction = in_direction;
-        transform.position = in_grid.GridCoordToWorldCoord(m_currentNode.position);
+        transform.position = m_gridRef.GridCoordToWorldCoord(m_currentNode.position);
     }
 
     private void Awake()
     {
         GameController.StepController().PreStepEvent += BeginStep;
         GameController.StepController().StepEvent += Move;
-        in_grid = GameObject.Find("Grid").GetComponent<TileGrid>();
+        m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
 
         GameController.StepController().AddEntity();
     }
 
     public void BeginStep()
     {
+        GameController.StepController().ApplyMove();
         GameController.StepController().ApplyMove();
     }
 
@@ -42,7 +41,7 @@ public class bullet : MonoBehaviour
             m_currentNode.AddObject(gameObject);
 
             m_hasMoved = true;
-            LeanTween.move(gameObject, in_grid.GridCoordToWorldCoord(m_currentNode.position), 0.1f);
+            LeanTween.move(gameObject, m_gridRef.GridCoordToWorldCoord(m_currentNode.position), 0.1f);
         }
         else
         {
@@ -56,8 +55,8 @@ public class bullet : MonoBehaviour
         Debug.Log("bullet destroyed");
         //Player.m_PlayerMoved -= Move;
         //GameController.StepController().AddEntity(); // silly goose @jay :3
-        GameController.StepController().PreStepEvent    -= BeginStep;
-        GameController.StepController().StepEvent       -= Move;
+        GameController.StepController().PreStepEvent -= BeginStep;
+        GameController.StepController().StepEvent -= Move;
         GameController.StepController().RemoveEntity();
         Destroy(gameObject);
     }
