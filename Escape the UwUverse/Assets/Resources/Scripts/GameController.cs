@@ -21,9 +21,7 @@ public class GameController : MonoBehaviour
     { get { return m_stepController; } }
 
     public static StepController StepController()
-    {
-        return Instance.stepController;
-    }
+    { return Instance.stepController; }
 
     public static GameController Instance
     {
