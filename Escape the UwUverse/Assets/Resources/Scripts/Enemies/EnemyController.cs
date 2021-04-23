@@ -12,13 +12,13 @@ namespace UwUverse
         private void Awake()
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
-
-            GameController.StepController().StepEvent += OnStep;
-            GameController.StepController().PreStepEvent += OnBeginStep;
         }
 
         private void Start()
         {
+            GameController.StepController().StepEvent += OnStep;
+            GameController.StepController().PreStepEvent += OnBeginStep;
+
             m_brain.Initialise(this);
 
             if (m_brain.path.Length > 0)
@@ -35,10 +35,6 @@ namespace UwUverse
             m_brain.currentNode.AddObject(gameObject);
 
             GameController.StepController().AddEntity();
-        }
-
-        private void Update()
-        {
         }
 
         public void OnBeginStep()

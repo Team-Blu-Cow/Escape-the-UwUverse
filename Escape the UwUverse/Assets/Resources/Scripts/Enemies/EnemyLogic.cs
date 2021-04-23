@@ -9,22 +9,47 @@ namespace UwUverse
     [SerializeField]
     public struct ActionQueue
     {
-        public Queue<IEnemyAction> m_actionQueue;
-        [SerializeField] public IEnemyAction[] m_actionList;
+        public Queue<IEnemyAction>[] m_actionQueues;
+        [SerializeField] public List<IEnemyAction>[] m_actionLists;
 
-        public void AssignQueue()
+        public void Initialise(int numberOfQueues)
         {
-            m_actionQueue = new Queue<IEnemyAction>();
-            foreach(var item in m_actionList)
+            m_actionLists = new List<IEnemyAction>[numberOfQueues];
+            
+            for (int i = 0; i < numberOfQueues; i++)
             {
-                m_actionQueue.Enqueue(item);
+                m_actionLists[i] = new List<IEnemyAction>();
             }
         }
 
-        public IEnemyAction NextAction()
+        public void AddAction(int listIndex, IEnemyAction action)
         {
-            IEnemyAction action = m_actionQueue.Dequeue();
-            m_actionQueue.Enqueue(action);
+            m_actionLists[listIndex].Add(action);
+        }
+
+        public IEnemyAction GetAction(int listIndex, int actionIndex)
+        {
+            return m_actionLists[listIndex][actionIndex];
+        }
+
+        public void AssignQueues()
+        {
+            m_actionQueues = new Queue<IEnemyAction>[m_actionLists.Length];
+
+            for (int i = 0; i < m_actionLists.Length; i++)
+            {
+                m_actionQueues[i] = new Queue<IEnemyAction>();
+                foreach (var item in m_actionLists[i])
+                {
+                    m_actionQueues[i].Enqueue(item);
+                }
+            }
+        }
+
+        public IEnemyAction NextAction(int queueIndex)
+        {
+            IEnemyAction action = m_actionQueues[queueIndex].Dequeue();
+            m_actionQueues[queueIndex].Enqueue(action);
             return action;
         }
     }
@@ -38,7 +63,7 @@ namespace UwUverse
         // Debug editor members
 #if UNITY_EDITOR
         public bool drawPathGizmo;
-        public bool drawDangerSquares;
+        public bool drawDangerShapes;
 #endif
         // Action related members
         protected ActionQueue m_actionQueue;
@@ -46,7 +71,7 @@ namespace UwUverse
 
         // Path related members, getters & setters
         [SerializeField] protected Vector2[] m_path;
-        public int m_currentPathNode = 0;
+        [HideInInspector] public int m_currentPathNode = 0;
         public Vector2[] path
         {
             get { return m_path; }
@@ -58,26 +83,28 @@ namespace UwUverse
         public EnemyController controller 
         { get { return m_controller; } set { m_controller = value; } }
         public Vector2Int position
-        { get { return m_controller.CurrentNode.position;} }
+        { get { return m_controller.CurrentNode.position; } }
         public GridNode currentNode 
         { get { return m_controller.CurrentNode; }set { m_controller.CurrentNode = value; } }
         
         // death flag
-        public bool m_isDead = false;
-
-        public int m_queueIndex = 0;
+        [HideInInspector] public bool m_isDead = false;
 
         // ***** VIRTUAL METHODS *****
 
         // Method to initialize the action queue of a given enemy type
-        virtual public void SetActions() { }
+        virtual public void SetActions() 
+        {
+            m_actionQueue.Initialise(1);
+            m_actionQueue.AddAction(0, new WaitAction());
+        }
 
         // Method run on initialization of controller class
         virtual public void Initialise(EnemyController in_controller)
         {
             m_controller = in_controller;
             SetActions();
-            m_actionQueue.AssignQueue();
+            m_actionQueue.AssignQueues();
             m_currentPathNode = 0;
         }
 
@@ -86,7 +113,7 @@ namespace UwUverse
         // at the end of this method. behavior will not work otherwise
         virtual public void PreStep()
         {
-            m_currentAction = m_actionQueue.NextAction();
+            m_currentAction = m_actionQueue.NextAction(0);
             m_currentAction.CalculateStep(null, null, this, null);
             GameController.StepController().ApplyMove();
         }
