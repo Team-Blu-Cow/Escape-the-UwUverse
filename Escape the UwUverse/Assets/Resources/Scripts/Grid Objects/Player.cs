@@ -12,6 +12,10 @@ public class Player : GridEntity
 
     private bool m_hasShot = false;
 
+    public int health = 2;
+    public int maxHealth = 3;
+    public int shotCooldown = 3;
+
     private void Awake()
     {
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();

@@ -6,6 +6,8 @@ public class Pause : MonoBehaviour
 {
     private Canvas canvas;
 
+    [SerializeField] private Canvas optionsCanvas;
+
     private void Start()
     {
         canvas = GetComponent<Canvas>();
@@ -25,5 +27,15 @@ public class Pause : MonoBehaviour
         {
             canvas.enabled = true;
         }
+    }
+
+    public void OpenOptions()
+    {
+        optionsCanvas.enabled = true;
+    }
+
+    public void CloseOptions()
+    {
+        optionsCanvas.enabled = false;
     }
 }
