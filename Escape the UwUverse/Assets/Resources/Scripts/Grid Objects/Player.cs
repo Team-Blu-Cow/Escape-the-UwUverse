@@ -7,6 +7,8 @@ using UwUverse;
 
 public class Player : GridEntity
 {
+    public static event Action player_died;
+
     private Vector2Int m_shotDirection = Vector2Int.zero;
     private MasterInput m_input;
 
@@ -59,6 +61,13 @@ public class Player : GridEntity
     {
         TargetNode = CurrentNode.GetNeighbour(direction);
 
+        //hit logic
+        if (true)
+        {
+            Hit(/*hit obj*/null, 0);
+        }
+
+        //Shooting logic
         if (TargetNode != null && !TargetNode.isWall && !TargetNode.isHole)
         {
             if (m_hasShot)
@@ -84,6 +93,23 @@ public class Player : GridEntity
         CurrentNode = TargetNode;
         CurrentNode.AddObject(gameObject);
         LeanTween.move(gameObject, m_gridRef.GridCoordToWorldCoord(CurrentNode.position), 0.1f);
+    }
+
+    public override void Hit(GameObject obj, int damage)
+    {
+        // object specific
+        if (obj.GetComponent<bullet>() != null)
+        {
+            obj.GetComponent<bullet>().BulletDestroy();
+        }
+
+        health -= damage;
+
+        if (health < 1)
+        {
+            player_died?.Invoke();
+            /*die();*/
+        }
     }
 
     private void SetShot(Vector2Int in_direction)
