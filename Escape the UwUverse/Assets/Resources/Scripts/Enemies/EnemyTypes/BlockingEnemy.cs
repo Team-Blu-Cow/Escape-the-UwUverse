@@ -16,30 +16,16 @@ namespace UwUverse
         public override void Initialise(EnemyController in_controller)
         {
             base.Initialise(in_controller);
-
-            //m_path = new EnemyPath();
         }
 
         public override void SetActions()
         {
-            m_actionQueue.m_actionList = new IEnemyAction[4];
-            m_actionQueue.m_actionList[0] = new MoveAlongPathAction();
-            m_actionQueue.m_actionList[0].id = (Int32)ActionIDS.MoveAction;
-            m_actionQueue.m_actionList[1] = new MoveAlongPathAction();
-            m_actionQueue.m_actionList[1].id = (Int32)ActionIDS.MoveAction;
-            m_actionQueue.m_actionList[2] = new MoveAlongPathAction();
-            m_actionQueue.m_actionList[2].id = (Int32)ActionIDS.MoveAction;
-            m_actionQueue.m_actionList[3] = new BlockAction();
-            m_actionQueue.m_actionList[3].id = (Int32)ActionIDS.BlockAction;
-            //m_actionQueue.m_actionList[0] = new TestBlockAction();
-            //m_actionQueue.m_actionList[0].id = (Int32)ActionIDS.BlockAction;
-        }
+            m_actionQueue.Initialise(1);
 
-        public override void PreStep()
-        {
-            m_currentAction = m_actionQueue.NextAction();
-            m_currentAction.CalculateStep(null, null, this, null);
-            GameController.StepController().ApplyMove();
+            m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.AddAction(0, new BlockAction());
         }
 
         public override void Step()
@@ -75,7 +61,7 @@ namespace UwUverse
                 }
             }
 
-            if(drawDangerSquares)
+            if(drawDangerShapes)
             {
                 int pathNodeIndex = m_currentPathNode;
 
