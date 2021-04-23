@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    [SerializeField] private Player m_player;
 
     // Start is called before the first frame update
     private void Start()
@@ -21,12 +19,12 @@ public class UIManager : MonoBehaviour
 
     private void UpdateHealth()
     {
-        for (int i = 0; i < player.maxHealth; i++)
+        for (int i = 0; i < m_player.maxHealth; i++)
         {
             transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < player.health; i++)
+        for (int i = 0; i < m_player.health; i++)
         {
             transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
         }
@@ -34,6 +32,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdateShotCounter()
     {
-        transform.GetChild(1).GetComponentInChildren<Slider>().value = player.shotCooldown;
+        transform.GetChild(1).GetComponentInChildren<Slider>().value = m_player.shotCooldown;
     }
 }

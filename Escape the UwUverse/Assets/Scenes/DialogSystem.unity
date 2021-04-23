@@ -2074,7 +2074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa7b6612e9251147a1a0aabf38902a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 85347580}
+  m_player: {fileID: 85347580}
 --- !u!1 &501426193
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,11 +4938,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167cd6506e4e48141b5feb5672938ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  in_customDialog: []
-  in_textDelay: []
+  in_customDialog:
+  - Hi :)
+  - We are doind work pwomise
+  in_textDelay:
+  - 0.1
+  - 0.1
   in_speakerName: 
-  in_randomPerson: 0
-  in_displayText: {fileID: 0}
+  in_randomPerson: 1
+  in_displayText: {fileID: 1967483685}
 --- !u!61 &1142490879
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5533,7 +5537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af81b15163086d4e8bc57d48d971d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionsCanvas: {fileID: 526026963}
+  m_optionsCanvas: {fileID: 0}
 --- !u!114 &1254587656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7820,6 +7824,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1967483685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6099506037508198648, guid: a74a4022e2e85584285ab14a505fb915, type: 3}
+  m_PrefabInstance: {fileID: 698544394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00487572f7900a489c271f844e01b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1968587322
 GameObject:
   m_ObjectHideFlags: 0

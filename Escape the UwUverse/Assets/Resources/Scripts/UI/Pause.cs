@@ -1,41 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    private Canvas canvas;
+    private Canvas m_canvas;
 
-    [SerializeField] private Canvas optionsCanvas;
+    [SerializeField] private Canvas m_optionsCanvas;
 
     private void Start()
     {
-        canvas = GetComponent<Canvas>();
-        canvas.enabled = false;
+        m_canvas = GetComponent<Canvas>();
+        m_canvas.enabled = false;
     }
 
     public void TogglePause()
     {
         // Get if the options are already open or not
-        bool open = canvas.isActiveAndEnabled;
+        bool open = m_canvas.isActiveAndEnabled;
 
         if (open)
         {
-            canvas.enabled = false;
+            m_canvas.enabled = false;
         }
         else
         {
-            canvas.enabled = true;
+            m_canvas.enabled = true;
         }
     }
 
     public void OpenOptions()
     {
-        optionsCanvas.enabled = true;
+        m_optionsCanvas.enabled = true;
     }
 
     public void CloseOptions()
     {
-        optionsCanvas.enabled = false;
+        m_optionsCanvas.enabled = false;
     }
 }
