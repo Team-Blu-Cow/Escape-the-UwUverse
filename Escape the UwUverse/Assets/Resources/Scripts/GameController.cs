@@ -7,6 +7,11 @@ public class GameController : MonoBehaviour
     // make game controller a singleton
     private static GameController _Instance;
 
+    private FileIO.UserData m_userData = null;
+
+    public FileIO.UserData userData
+    { get { return m_userData; } }
+
     [SerializeField]
     private Camera m_camera;
 
@@ -57,7 +62,7 @@ public class GameController : MonoBehaviour
         m_levelLoader = FindObjectOfType<LevelLoader>();
 
         m_stepController = new StepController();
-
+        m_userData = new FileIO.UserData();
         m_levels = new Level[m_levelAmount];
 
         for (int i = 0; i < m_levelAmount; i++)

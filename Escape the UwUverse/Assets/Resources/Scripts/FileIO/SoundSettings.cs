@@ -1,5 +1,6 @@
 namespace FileIO
 {
+    [System.Serializable]
     public class SoundSettings
     {
         private float m_masterVolume = 1f;
