@@ -709,7 +709,7 @@ MonoBehaviour:
   - 0.005
   - 0.01
   in_speakerName: Bock Cig
-  in_randomPerson: 0
+  in_randomPerson: 1
   in_displayText: {fileID: 2139991728}
 --- !u!61 &2127967868
 BoxCollider2D:

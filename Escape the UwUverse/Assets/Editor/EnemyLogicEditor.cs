@@ -20,7 +20,7 @@ public class EnemyLogicEditor : Editor
         eLogic = (EnemyLogic)target;
 
         var positions = eLogic.path;
-        if (positions.Length > 1)
+        if (positions != null && positions.Length > 1)
         {
             TileGrid grid = GameObject.FindObjectOfType<TileGrid>();
 
