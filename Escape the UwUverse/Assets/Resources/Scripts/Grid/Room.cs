@@ -9,6 +9,12 @@ public class Room : MonoBehaviour
     [HideInInspector]
     public bool m_focused = false;
 
+    [SerializeField]
+    private bool m_zoomedCamera = false;
+
+    public bool zoomedCamera
+    { get { return m_zoomedCamera; } }
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -30,7 +36,7 @@ public class Room : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (m_focused)
+        if (m_zoomedCamera)
         {
             Gizmos.color = Color.green;
         }
