@@ -12,6 +12,7 @@ namespace UwUverse
         private void Awake()
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
+            m_brain = gameObject.GetComponent<EnemyLogic>();
         }
 
         private void Start()
