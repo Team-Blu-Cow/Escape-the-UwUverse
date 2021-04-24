@@ -9,6 +9,13 @@ namespace UwUverse
     {
         [SerializeField] public EnemyLogic m_brain;
 
+        public int hp
+        {
+            get { return m_brain.hp; }
+            set { m_brain.hp = value; }
+        }
+
+
         private void Awake()
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
@@ -54,6 +61,11 @@ namespace UwUverse
             GameController.StepController().StepEvent -= OnStep;
             GameController.StepController().PreStepEvent -= OnBeginStep;
             GameController.StepController().RemoveEntity();
+        }
+
+        public override void Hit(GameObject obj, int damage)
+        {
+            m_brain.hp -= damage;
         }
     }
 }

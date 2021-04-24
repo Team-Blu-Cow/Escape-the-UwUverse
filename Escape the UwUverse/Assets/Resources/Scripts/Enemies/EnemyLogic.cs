@@ -101,6 +101,9 @@ namespace UwUverse
         // death flag
         [HideInInspector] public bool m_isDead = false;
 
+        // health
+        public int hp = 1;
+
         // ***** VIRTUAL METHODS *****
 
         // Method to initialize the action queue of a given enemy type
@@ -140,6 +143,9 @@ namespace UwUverse
         virtual public void CheckIfDead() { }
 
         // method to determine behavior upon death
-        virtual public void KillEnemy() { }
+        virtual public void KillEnemy() 
+        {
+            Destroy(gameObject);
+        }
     }
 }

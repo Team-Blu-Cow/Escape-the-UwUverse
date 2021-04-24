@@ -85,6 +85,42 @@ namespace UwUverse
         public override void Step()
         {
             m_currentAction.ExecuteStep(null, null, this, null);
+            CheckIfDead();
+        }
+
+        public override void CheckIfDead()
+        {
+            const int CheckNum = 4;
+
+            Vector2Int[] offsets = new Vector2Int[CheckNum];
+
+            offsets[0] = new Vector2Int(1, 0);
+            offsets[1] = new Vector2Int(-1, 0);
+            offsets[2] = new Vector2Int(0, 1);
+            offsets[3] = new Vector2Int(0, -1);
+
+            GridNode[] nodes = new GridNode[CheckNum];
+
+            nodes[0] = currentNode.GetNeighbour(offsets[0]);
+            nodes[1] = currentNode.GetNeighbour(offsets[1]);
+            nodes[2] = currentNode.GetNeighbour(offsets[2]);
+            nodes[3] = currentNode.GetNeighbour(offsets[3]);
+
+            GameObject[] bullets = new GameObject[CheckNum];
+
+            for (int i = 0; i < CheckNum; i++)
+            {
+                if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+                {
+                    if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == (offsets[i] * -1)))
+                    {
+                        bullets[i].GetComponent<bullet>().BulletDestroy();
+                        controller.Hit(null, 1);
+                        if (hp<=0)
+                            KillEnemy();
+                    }
+                }
+            }
         }
 
         public bool PlayerInFiringRange()

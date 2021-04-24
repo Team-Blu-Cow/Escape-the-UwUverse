@@ -6304,6 +6304,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8591947842694649623, guid: 9a987faec942f88438ded3b1533b40bb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a987faec942f88438ded3b1533b40bb, type: 3}
 --- !u!1 &682720230 stripped
@@ -6332,6 +6336,7 @@ MonoBehaviour:
   - {x: -4, y: -2}
   m_currentPathNode: 0
   m_isDead: 0
+  hp: 1
 --- !u!1 &763112586
 GameObject:
   m_ObjectHideFlags: 0
@@ -6435,6 +6440,7 @@ MonoBehaviour:
   m_path: []
   m_currentPathNode: 0
   m_isDead: 0
+  hp: 3
   state: 0
   attackRadius: 4
   m_drawGizmos: 0
@@ -6617,6 +6623,7 @@ MonoBehaviour:
   - {x: 2, y: -1}
   m_currentPathNode: 0
   m_isDead: 0
+  hp: 1
 --- !u!114 &1487529790
 MonoBehaviour:
   m_ObjectHideFlags: 0
