@@ -6349,7 +6349,7 @@ MonoBehaviour:
   m_currentPathNode: 0
   m_isDead: 0
   state: 0
-  attackRadius: 3
+  attackRadius: 4
 --- !u!114 &1158560032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6922,6 +6922,10 @@ PrefabInstance:
     - target: {fileID: 2916817097167457600, guid: 81782aba50f05194c8ab4960656ec962, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916817097167457606, guid: 81782aba50f05194c8ab4960656ec962, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2916817097167457607, guid: 81782aba50f05194c8ab4960656ec962, type: 3}
       propertyPath: m_RootOrder

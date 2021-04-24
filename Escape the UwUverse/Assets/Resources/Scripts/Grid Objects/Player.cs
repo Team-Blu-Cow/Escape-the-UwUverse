@@ -102,7 +102,7 @@ public class Player : GridEntity
     public override void Hit(GameObject obj, int damage)
     {
         // object specific
-        if (obj.GetComponent<bullet>() != null)
+        if (obj != null && obj.GetComponent<bullet>() != null)
         {
             obj.GetComponent<bullet>().BulletDestroy();
         }

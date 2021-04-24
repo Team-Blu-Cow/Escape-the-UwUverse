@@ -16,12 +16,17 @@ namespace UwUverse
 
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-           
+            MortarEnemy Me = (MortarEnemy)me;
+
+            Me.targetNode = Me.player.CurrentNode.position;
         }
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            Debug.Log("pick target");
+            MortarEnemy Me = (MortarEnemy)me;
+
+            Me.CreateIndicators();
+            Me.m_drawGizmos = true;
         }
     }
 }

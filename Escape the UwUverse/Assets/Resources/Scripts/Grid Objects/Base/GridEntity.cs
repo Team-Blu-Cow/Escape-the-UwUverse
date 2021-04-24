@@ -25,6 +25,9 @@ public class GridEntity : MonoBehaviour
         get { return m_currentNode.position; }
     }
 
+    public TileGrid grid
+    { get { return m_gridRef; } }
+
     public virtual void Hit(GameObject obj, int damage)
     {
         Debug.LogWarning("Default hit called!");
