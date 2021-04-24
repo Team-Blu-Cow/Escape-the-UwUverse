@@ -23,6 +23,8 @@ namespace UwUverse
 
             GetDirection(me);
 
+            CheckCollision(me);
+
             ValidateShoot(me);
         }
 
@@ -36,6 +38,39 @@ namespace UwUverse
 
             m_direction = Vector2Int.RoundToInt((Mathf.Abs(dirX) > Mathf.Abs(dirY)) ?
                     new Vector2(Mathf.Sign(dirX), 0) : new Vector2(0, Mathf.Sign(dirY)));
+        }
+
+        private void CheckCollision(EnemyLogic me)
+        {
+            const int CheckNum = 4;
+
+            Vector2Int[] offsets = new Vector2Int[CheckNum];
+
+            offsets[0] = new Vector2Int(1, 0);
+            offsets[1] = new Vector2Int(-1, 0);
+            offsets[2] = new Vector2Int(0, 1);
+            offsets[3] = new Vector2Int(0, -1);
+
+            GridNode[] nodes = new GridNode[CheckNum];
+
+            nodes[0] = me.currentNode.GetNeighbour(offsets[0]);
+            nodes[1] = me.currentNode.GetNeighbour(offsets[1]);
+            nodes[2] = me.currentNode.GetNeighbour(offsets[2]);
+            nodes[3] = me.currentNode.GetNeighbour(offsets[3]);
+
+            GameObject[] bullets = new GameObject[CheckNum];
+
+            for (int i = 0; i < CheckNum; i++)
+            {
+                if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+                {
+                    if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == (offsets[i] * -1)))
+                    {
+                        me.m_isDead = true;
+                        bullets[i].GetComponent<bullet>().BulletDestroy();                       
+                    }
+                }
+            }
         }
 
         private void ValidateShoot(EnemyLogic me)

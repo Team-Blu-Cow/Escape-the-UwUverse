@@ -37,8 +37,9 @@ namespace UwUverse
 
         public override void CheckIfDead()
         {
+            Debug.Log(m_isDead);
             if(m_isDead)
-            {
+            {               
                 Destroy(gameObject);
             }
         }
