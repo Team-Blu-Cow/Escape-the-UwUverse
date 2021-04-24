@@ -37,6 +37,9 @@ public class GridNode
         set { m_isHole = value; }
     }
 
+    public bool IsTraversable
+    { get { return !isHole && !isWall; } }
+
     public int x
     {
         get { return m_posX; }
@@ -72,11 +75,12 @@ public class GridNode
     {
         return m_objectsInNode.Contains(obj);
     }
+    
     public bool HasObjectOfType<T>()
     {
         foreach (GameObject obj in m_objectsInNode)
         {
-            if(obj != null && obj.GetComponent<T>() != null)
+            if (obj != null && obj.GetComponent<T>() != null)
             {
                 return true;
             }

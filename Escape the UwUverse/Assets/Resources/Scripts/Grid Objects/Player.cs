@@ -66,10 +66,10 @@ public class Player : GridEntity
         TargetNode = CurrentNode.GetNeighbour(direction);
 
         //hit logic
-        if (true)
-        {
-            Hit(/*hit obj*/null, 0);
-        }
+        // if (true)
+        // {
+        //     Hit(/*hit obj*/null, 0);
+        // }
 
         //Shooting logic
         if (TargetNode != null && !TargetNode.isWall && !TargetNode.isHole)
@@ -138,6 +138,7 @@ public class Player : GridEntity
 
     private Vector2Int DirectionFromMouse()
     {
+        return new Vector2Int(); // TODO @adam - this is throwing a error and i cba dealing with this right now, pls fix, thanks
         Vector2 directionf = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
         directionf.Normalize();
         Vector2Int directioni = Vector2Int.RoundToInt(directionf);
