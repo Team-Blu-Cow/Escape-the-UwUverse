@@ -8,7 +8,8 @@ namespace FileIO
         [System.Serializable]
         protected class DiskUserData
         {
-            public SoundSettings m_soundSettings;
+            public SoundSettings m_soundSettings = null;
+            public LevelData m_levelData = null;
         }
 
         private DiskUserData m_userData = null;
@@ -18,6 +19,12 @@ namespace FileIO
         {
             get { return m_userData.m_soundSettings; }
             set { m_userData.m_soundSettings = value; }
+        }
+
+        public LevelData m_levelData
+        {
+            get { return m_userData.m_levelData; }
+            set { m_userData.m_levelData = value; }
         }
 
         // read data from disk if available
@@ -58,6 +65,7 @@ namespace FileIO
 
             // sets default volume
             m_userData.m_soundSettings = new SoundSettings();
+            m_userData.m_levelData = new LevelData();
 
             return m_userFile.WriteData(m_userData);
         }
