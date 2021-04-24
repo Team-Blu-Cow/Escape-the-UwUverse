@@ -138,8 +138,7 @@ public class Player : GridEntity
 
     private Vector2Int DirectionFromMouse()
     {
-        return new Vector2Int(); // TODO @adam - this is throwing a error and i cba dealing with this right now, pls fix, thanks
-        Vector2 directionf = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
+        Vector2 directionf = GameController.Instance.camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
         directionf.Normalize();
         Vector2Int directioni = Vector2Int.RoundToInt(directionf);
         return directioni;

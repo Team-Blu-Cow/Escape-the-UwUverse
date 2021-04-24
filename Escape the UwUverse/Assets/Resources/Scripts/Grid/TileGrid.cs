@@ -238,7 +238,7 @@ internal class GridPathfinder
         GridPathfinderNode outNode = new GridPathfinderNode();
         outNode.x = inNode.x;
         outNode.y = inNode.y;
-        outNode.IsTraversable = inNode.IsTraversable;
+        outNode.IsTraversable = inNode.isTraversable;
         outNode.node = inNode;
         return outNode;
     }

@@ -37,7 +37,7 @@ public class GridNode
         set { m_isHole = value; }
     }
 
-    public bool IsTraversable
+    public bool isTraversable
     { get { return !isHole && !isWall; } }
 
     public int x
@@ -75,7 +75,7 @@ public class GridNode
     {
         return m_objectsInNode.Contains(obj);
     }
-    
+
     public bool HasObjectOfType<T>()
     {
         foreach (GameObject obj in m_objectsInNode)
