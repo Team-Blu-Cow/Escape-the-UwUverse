@@ -30,6 +30,7 @@ public class GridEntity : MonoBehaviour
 
     public virtual void Hit(GameObject obj, int damage)
     {
-        Debug.LogWarning("Default hit called!");
+        //Debug.LogWarning("Default hit called!");
+        Debug.Log("I've been Hit");
     }
 }

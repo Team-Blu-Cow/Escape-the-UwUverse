@@ -68,7 +68,7 @@ public class Player : GridEntity
         //hit logic
         if (true)
         {
-            Hit(/*hit obj*/null, 0);
+            //Hit(/*hit obj*/null, 0);
         }
 
         //Shooting logic
@@ -101,6 +101,8 @@ public class Player : GridEntity
 
     public override void Hit(GameObject obj, int damage)
     {
+        base.Hit(obj, damage);
+
         // object specific
         if (obj != null && obj.GetComponent<bullet>() != null)
         {

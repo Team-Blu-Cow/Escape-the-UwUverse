@@ -21,6 +21,7 @@ namespace UwUverse
         public bool m_drawGizmos = false;
 
         private GameObject m_targetIndicatorPrefab;
+        private GameObject m_shotUpPrefab;
 
         public Player player { get { return m_player; } }
         public Vector2Int targetNode 
@@ -33,7 +34,8 @@ namespace UwUverse
         {
             base.Initialise(in_controller);
 
-            m_targetIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Misc/MortarTarget");
+            m_targetIndicatorPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Mortar/MortarTarget");
+            m_shotUpPrefab          = Resources.Load<GameObject>("Prefabs/Enemies/Mortar/MortarShotUp");
 
             state = State.IDLE;
 
@@ -54,16 +56,24 @@ namespace UwUverse
             m_actionQueue.AddAction((int)State.FIRING, new MortarFireAction());
         }
 
+        public void Update()
+        {
+            if (PlayerInFiringRange())
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            else
+                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+
         public override void PreStep()
         {
             if (PlayerInFiringRange())
             {
                 state = State.FIRING;
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                //gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             }
 
 
@@ -77,7 +87,7 @@ namespace UwUverse
             m_currentAction.ExecuteStep(null, null, this, null);
         }
 
-        private bool PlayerInFiringRange()
+        public bool PlayerInFiringRange()
         {
             return Vector3.Distance(transform.position, m_player.transform.position) <= attackRadius + 0.25f;
         }
@@ -86,18 +96,30 @@ namespace UwUverse
         {
             GameObject centreTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GridCoordToWorldCoord(m_targetNode), Quaternion.identity);
             centreTarget.transform.parent = transform;
+            centreTarget.GetComponent<MortarTarget>().centre = true;
+            centreTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode);
 
             GameObject rightTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(1,0).worldPosition, Quaternion.identity);
             rightTarget.transform.parent = transform;
+            rightTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(1, 0);
 
             GameObject leftTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(-1, 0).worldPosition, Quaternion.identity);
             leftTarget.transform.parent = transform;
+            leftTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(-1, 0);
 
             GameObject upTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(0, 1).worldPosition, Quaternion.identity);
             upTarget.transform.parent = transform;
+            upTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(0, 1);
 
             GameObject downTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(0, -1).worldPosition, Quaternion.identity);
             downTarget.transform.parent = transform;
+            downTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(0, -1);
+        }
+
+        public void ShootProjectile()
+        {
+            GameObject shot = GameObject.Instantiate(m_shotUpPrefab, transform.position, Quaternion.identity);
+            shot.transform.parent = transform;
         }
 
         private void OnDrawGizmos()

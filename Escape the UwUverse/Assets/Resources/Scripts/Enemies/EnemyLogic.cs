@@ -46,6 +46,15 @@ namespace UwUverse
             }
         }
 
+        public void ResetQueue(int queueIndex)
+        {
+            m_actionQueues[queueIndex].Clear();
+            foreach (var item in m_actionLists[queueIndex])
+            {
+                m_actionQueues[queueIndex].Enqueue(item);
+            }
+        }
+
         public IEnemyAction NextAction(int queueIndex)
         {
             IEnemyAction action = m_actionQueues[queueIndex].Dequeue();
@@ -68,6 +77,8 @@ namespace UwUverse
         // Action related members
         protected ActionQueue m_actionQueue;
         protected IEnemyAction m_currentAction;
+
+        public ActionQueue actionQueue { get { return m_actionQueue; } }
 
         // Path related members, getters & setters
         [SerializeField] protected Vector2[] m_path;
