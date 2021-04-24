@@ -7009,6 +7009,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2916817097167457601, guid: 81782aba50f05194c8ab4960656ec962, type: 3}
+      propertyPath: maxStepTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2916817097167457606, guid: 81782aba50f05194c8ab4960656ec962, type: 3}
       propertyPath: m_SortingOrder
       value: 0

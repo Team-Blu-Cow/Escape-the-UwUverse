@@ -18,6 +18,9 @@ public class Player : GridEntity
     public int maxHealth = 3;
     public int shotCooldown = 3;
 
+    public float maxStepTime = 0.1f;
+    public float stepTime = 0;
+
     private void Awake()
     {
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
@@ -26,6 +29,8 @@ public class Player : GridEntity
         {
             Debug.LogError("No grid could be found in scene, wrong name in hierarchy maybe?");
         }
+
+        stepTime = 0;
 
         m_input = new MasterInput();
         m_input.PlayerMovement.Move.performed += ctx => BeginStep(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));//Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
@@ -86,8 +91,12 @@ public class Player : GridEntity
                 m_hasShot = false;
             }
 
-            GameController.StepController().ApplyMove();
-            GameController.Instance.stepController.BeginStep();
+            if (stepTime > maxStepTime)
+            {
+                GameController.StepController().ApplyMove();
+                GameController.Instance.stepController.BeginStep();
+                stepTime = 0;
+            }
         }
     }
 
@@ -144,5 +153,10 @@ public class Player : GridEntity
         directionf.Normalize();
         Vector2Int directioni = Vector2Int.RoundToInt(directionf);
         return directioni;
+    }
+
+    private void Update()
+    {
+        stepTime += Time.deltaTime;
     }
 }
