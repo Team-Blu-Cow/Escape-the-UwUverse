@@ -14,14 +14,35 @@ namespace UwUverse
             set { m_id = value; }
         }
 
+        bool playerInRange;
+
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-           
+            playerInRange = true;
+
+            MortarEnemy Me = (MortarEnemy)me;
+            if(!Me.PlayerInFiringRange())
+            {
+                playerInRange = false;
+                Me.state = MortarEnemy.State.IDLE;
+                me.actionQueue.ResetQueue((int)MortarEnemy.State.FIRING);
+                return;
+            }
+
+            
+            Me.targetNode = Me.player.CurrentNode.position;
         }
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            Debug.Log("pick target");
+            if (!playerInRange)
+                return;
+            MortarEnemy Me = (MortarEnemy)me;
+
+            Me.CreateIndicators();
+            Me.m_drawGizmos = true;
+
+            Me.ShootProjectile();
         }
     }
 }

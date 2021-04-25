@@ -90,7 +90,12 @@ namespace UwUverse
             }
 
             // determine whether move is safe
-            me.m_isDead = !moveSafe;
+            if(!moveSafe)
+            {
+                me.controller.Hit(null, 1);
+                if(me.hp <= 0)
+                    me.m_isDead = !moveSafe;
+            }
         }
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)

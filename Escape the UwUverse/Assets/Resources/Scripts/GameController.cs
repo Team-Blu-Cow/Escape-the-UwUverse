@@ -27,10 +27,18 @@ public class GameController : MonoBehaviour
     [SerializeField] private int m_levelAmount;
 
     public Camera camera
-    { get { return m_camera; } }
+    {
+        get
+        {
+            if (m_camera != null)
+                return m_camera;
+            m_camera = GameObject.Find("Camera").GetComponent<Camera>();
+            return m_camera;
+        }
+    }
 
     public Cinemachine.CinemachineVirtualCamera vCamera
-    { get { return m_camera.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>(); } }
+    { get { return camera.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>(); } }
 
     [SerializeField] private StepController m_stepController;
 

@@ -21,7 +21,7 @@ namespace UwUverse
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            Debug.Log("wait");
+
         }
     }
 }

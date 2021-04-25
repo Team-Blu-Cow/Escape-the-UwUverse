@@ -21,9 +21,9 @@ namespace UwUverse
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            Debug.Log("FIRE!");
             MortarEnemy mortar_me = (MortarEnemy)me;
             mortar_me.state = MortarEnemy.State.IDLE;
+            mortar_me.m_drawGizmos = false;
         }
     }
 }

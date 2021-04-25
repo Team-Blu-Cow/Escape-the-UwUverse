@@ -46,6 +46,15 @@ namespace UwUverse
             }
         }
 
+        public void ResetQueue(int queueIndex)
+        {
+            m_actionQueues[queueIndex].Clear();
+            foreach (var item in m_actionLists[queueIndex])
+            {
+                m_actionQueues[queueIndex].Enqueue(item);
+            }
+        }
+
         public IEnemyAction NextAction(int queueIndex)
         {
             IEnemyAction action = m_actionQueues[queueIndex].Dequeue();
@@ -69,6 +78,8 @@ namespace UwUverse
         protected ActionQueue m_actionQueue;
         protected IEnemyAction m_currentAction;
 
+        public ActionQueue actionQueue { get { return m_actionQueue; } }
+
         // Path related members, getters & setters
         [SerializeField] protected Vector2[] m_path;
         [HideInInspector] public int m_currentPathNode = 0;
@@ -89,6 +100,9 @@ namespace UwUverse
         
         // death flag
         [HideInInspector] public bool m_isDead = false;
+
+        // health
+        public int hp = 1;
 
         // ***** VIRTUAL METHODS *****
 
@@ -129,6 +143,9 @@ namespace UwUverse
         virtual public void CheckIfDead() { }
 
         // method to determine behavior upon death
-        virtual public void KillEnemy() { }
+        virtual public void KillEnemy() 
+        {
+            Destroy(gameObject);
+        }
     }
 }
