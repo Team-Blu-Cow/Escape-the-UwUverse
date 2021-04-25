@@ -8,6 +8,7 @@ namespace UwUverse
     public class MoveAlongPathAction : IEnemyAction
     {
         private Int32 m_id;
+
         public Int32 id
         {
             get { return m_id; }
@@ -52,7 +53,7 @@ namespace UwUverse
             const int CheckNum = 4;
 
             // get node offsets
-            Vector2Int[] offsets = new Vector2Int[CheckNum-1];
+            Vector2Int[] offsets = new Vector2Int[CheckNum - 1];
 
             offsets[0] = new Vector2Int(m_direction.x - m_direction.y, m_direction.x + m_direction.y);
             offsets[1] = new Vector2Int(m_direction.x * 2, m_direction.y * 2);
@@ -77,11 +78,11 @@ namespace UwUverse
             // check nodes for bullets with certain velocity
             GameObject[] bullets = new GameObject[CheckNum];
 
-            for(int i = 0; i < CheckNum; i++)
+            for (int i = 0; i < CheckNum; i++)
             {
-                if(nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+                if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
                 {
-                    if(bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
+                    if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
                     {
                         moveSafe = false;
                         bullets[i].GetComponent<bullet>().BulletDestroy();
@@ -90,10 +91,10 @@ namespace UwUverse
             }
 
             // determine whether move is safe
-            if(!moveSafe)
+            if (!moveSafe)
             {
                 me.controller.Hit(null, 1);
-                if(me.hp <= 0)
+                if (me.hp <= 0)
                     me.m_isDead = !moveSafe;
             }
         }

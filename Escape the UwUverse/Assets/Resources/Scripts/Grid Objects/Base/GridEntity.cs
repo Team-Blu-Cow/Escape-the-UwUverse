@@ -7,6 +7,7 @@ public class GridEntity : MonoBehaviour
     protected GridNode m_targetNode;
     protected TileGrid m_gridRef = null;
     protected GridNode m_currentNode = null;
+    protected Vector2Int m_direction = Vector2Int.zero;
 
     public GridNode CurrentNode
     {
@@ -23,6 +24,12 @@ public class GridEntity : MonoBehaviour
     public Vector2Int Position
     {
         get { return m_currentNode.position; }
+    }
+
+    public Vector2Int Direction
+    {
+        get { return m_direction; }
+        set { m_direction = value; }
     }
 
     public TileGrid grid

@@ -15,7 +15,7 @@ namespace UwUverse
         public void Initialise(int numberOfQueues)
         {
             m_actionLists = new List<IEnemyAction>[numberOfQueues];
-            
+
             for (int i = 0; i < numberOfQueues; i++)
             {
                 m_actionLists[i] = new List<IEnemyAction>();
@@ -65,24 +65,30 @@ namespace UwUverse
 
     // ENEMY LOGIC CLASS ****************************************************************************************************************************
     // The base class to represent the AI logic of any enemy in the game
-    public class EnemyLogic : MonoBehaviour
-    {
-        // ***** CLASS MEMBERS *****
+    public class EnemyLogic : MonoBehaviour // TODO @jay: unsure what this will break since im mad tired but
+    {                                       // if possible try to port this to a GridEntity so I can access
+                                            // direction of enemy regardless of type <3
+                                            // Edit: should be easy enough if you then set direction in the move action
+                                            // ***** CLASS MEMBERS *****
 
         // Debug editor members
 #if UNITY_EDITOR
         public bool drawPathGizmo;
         public bool drawDangerShapes;
 #endif
+
         // Action related members
         protected ActionQueue m_actionQueue;
+
         protected IEnemyAction m_currentAction;
 
         public ActionQueue actionQueue { get { return m_actionQueue; } }
 
         // Path related members, getters & setters
         [SerializeField] protected Vector2[] m_path;
+
         [HideInInspector] public int m_currentPathNode = 0;
+
         public Vector2[] path
         {
             get { return m_path; }
@@ -91,13 +97,16 @@ namespace UwUverse
 
         // Controller reference and shortcut getters & setters
         protected EnemyController m_controller;
-        public EnemyController controller 
+
+        public EnemyController controller
         { get { return m_controller; } set { m_controller = value; } }
+
         public Vector2Int position
         { get { return m_controller.CurrentNode.position; } }
-        public GridNode currentNode 
-        { get { return m_controller.CurrentNode; }set { m_controller.CurrentNode = value; } }
-        
+
+        public GridNode currentNode
+        { get { return m_controller.CurrentNode; } set { m_controller.CurrentNode = value; } }
+
         // death flag
         [HideInInspector] public bool m_isDead = false;
 
@@ -107,7 +116,7 @@ namespace UwUverse
         // ***** VIRTUAL METHODS *****
 
         // Method to initialize the action queue of a given enemy type
-        virtual public void SetActions() 
+        virtual public void SetActions()
         {
             m_actionQueue.Initialise(1);
             m_actionQueue.AddAction(0, new WaitAction());
@@ -143,7 +152,7 @@ namespace UwUverse
         virtual public void CheckIfDead() { }
 
         // method to determine behavior upon death
-        virtual public void KillEnemy() 
+        virtual public void KillEnemy()
         {
             Destroy(gameObject);
         }
