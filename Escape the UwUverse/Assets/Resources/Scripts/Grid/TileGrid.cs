@@ -145,6 +145,30 @@ public class TileGrid : MonoBehaviour
     {
         return GridPathfinder.FindPath(start, end);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+        Vector3 startPos = new Vector3(-1*(width/2), -1*(height/2));
+        Vector3 targetPos = new Vector3(startPos.x, startPos.y + height);
+        Gizmos.DrawLine(startPos, targetPos);
+
+        Gizmos.color = new Color(1, 1, 1, 0.1f);
+        for (int i = 1; i < width; i++)
+            Gizmos.DrawLine(startPos + (Vector3.right*i), targetPos + (Vector3.right*i));
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(startPos + (Vector3.right * width), targetPos + (Vector3.right * width));
+
+        targetPos = new Vector3(startPos.x + width, startPos.y);
+        Gizmos.DrawLine(startPos, targetPos);
+
+        Gizmos.color = new Color(1, 1, 1, 0.1f);
+        for (int i = 1; i < height; i++)
+            Gizmos.DrawLine(startPos + (Vector3.up * i), targetPos + (Vector3.up * i));
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(startPos + (Vector3.up * height), targetPos + (Vector3.up * height));
+
+    }
 }
 
 //

@@ -90,7 +90,7 @@ namespace UwUverse
             if(m_canShoot == true)
             {
                 GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/bullet"), Vector3.zero, Quaternion.identity);
-                bullet.GetComponent<bullet>().createBullet(me.currentNode, m_direction);
+                bullet.GetComponent<bullet>().createBullet(me.currentNode.GetNeighbour(m_direction), m_direction);
             }
         }
     }
