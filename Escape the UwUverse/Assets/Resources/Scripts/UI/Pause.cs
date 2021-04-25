@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Pause : MonoBehaviour
     {
         m_canvas = GetComponent<Canvas>();
         m_canvas.enabled = false;
+
+        GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
     }
 
     public void TogglePause()

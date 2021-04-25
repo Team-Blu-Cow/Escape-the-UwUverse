@@ -3,11 +3,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Player m_player;
+    private Player m_player;
 
     // Start is called before the first frame update
     private void Start()
     {
+        m_player = FindObjectOfType<Player>();
+        if (m_player == null)
+        {
+            Debug.LogError("NO PLAYER IN SCENE");
+        }
     }
 
     // Update is called once per frame
@@ -19,14 +24,20 @@ public class UIManager : MonoBehaviour
 
     private void UpdateHealth()
     {
-        for (int i = 0; i < m_player.maxHealth; i++)
+        if (m_player.maxHealth <= 3)
         {
-            transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            for (int i = 0; i < m_player.maxHealth; i++)
+            {
+                transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            }
         }
 
-        for (int i = 0; i < m_player.health; i++)
+        if (m_player.health <= 3)
         {
-            transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            for (int i = 0; i < m_player.health; i++)
+            {
+                transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            }
         }
     }
 
