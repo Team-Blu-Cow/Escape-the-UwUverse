@@ -56,9 +56,6 @@ namespace UwUverse
             if (centre)
                 GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-            GameController.StepController().PreStepEvent -= OnPreStep;
-            GameController.StepController().StepEvent -= OnStep;
-
             List<GameObject> objectsInNode = currentNode.AllObjects();
             foreach(GameObject obj in objectsInNode)
             {
@@ -69,6 +66,12 @@ namespace UwUverse
             }
 
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            GameController.StepController().PreStepEvent -= OnPreStep;
+            GameController.StepController().StepEvent -= OnStep;
         }
     }
 }
