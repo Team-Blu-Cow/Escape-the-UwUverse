@@ -16,7 +16,7 @@ namespace UwUverse
 
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            
+            me.direction = Vector2Int.zero;
         }
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)

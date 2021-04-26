@@ -65,12 +65,8 @@ namespace UwUverse
 
     // ENEMY LOGIC CLASS ****************************************************************************************************************************
     // The base class to represent the AI logic of any enemy in the game
-    public class EnemyLogic : MonoBehaviour // TODO @jay: unsure what this will break since im mad tired but
-    {                                       // if possible try to port this to a GridEntity so I can access
-                                            // direction of enemy regardless of type <3
-                                            // Edit: should be easy enough if you then set direction in the move action
-                                            // ***** CLASS MEMBERS *****
-
+    public class EnemyLogic : MonoBehaviour
+    {
         // Debug editor members
 #if UNITY_EDITOR
         public bool drawPathGizmo;
@@ -94,6 +90,11 @@ namespace UwUverse
             get { return m_path; }
             set { path = value; }
         }
+
+        //protected Vector2Int m_direction;
+
+        public Vector2Int direction
+        { get { return controller.Direction; } set { controller.Direction = value; } }
 
         // Controller reference and shortcut getters & setters
         protected EnemyController m_controller;

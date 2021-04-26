@@ -15,11 +15,9 @@ namespace UwUverse
             set { m_id = value; }
         }
 
-        private Vector2Int m_direction;
-
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            m_direction = Vector2Int.zero;
+            me.direction = Vector2Int.zero;
 
             // Step 1: get direction of movement
             GetDirection(me);
@@ -28,7 +26,7 @@ namespace UwUverse
             ValidateMove(me);
         }
 
-        private void GetDirection(EnemyLogic me)
+        public static void GetDirection(EnemyLogic me)
         {
             if (me.position == me.currentNode.m_grid.GetNearestNode(me.path[(me.m_currentPathNode + 1) % me.path.Length]).position)
                 me.m_currentPathNode = (me.m_currentPathNode + 1) % me.path.Length;
@@ -36,7 +34,7 @@ namespace UwUverse
             float dirX = me.path[(me.m_currentPathNode + 1) % me.path.Length].x - me.path[me.m_currentPathNode % me.path.Length].x;
             float dirY = me.path[(me.m_currentPathNode + 1) % me.path.Length].y - me.path[me.m_currentPathNode % me.path.Length].y;
 
-            m_direction = Vector2Int.RoundToInt((Mathf.Abs(dirX) > Mathf.Abs(dirY)) ?
+            me.direction = Vector2Int.RoundToInt((Mathf.Abs(dirX) > Mathf.Abs(dirY)) ?
                     new Vector2(Mathf.Sign(dirX), 0) : new Vector2(0, Mathf.Sign(dirY)));
         }
 
@@ -55,9 +53,9 @@ namespace UwUverse
             // get node offsets
             Vector2Int[] offsets = new Vector2Int[CheckNum - 1];
 
-            offsets[0] = new Vector2Int(m_direction.x - m_direction.y, m_direction.x + m_direction.y);
-            offsets[1] = new Vector2Int(m_direction.x * 2, m_direction.y * 2);
-            offsets[2] = new Vector2Int(m_direction.x + m_direction.y, m_direction.y - m_direction.x);
+            offsets[0] = new Vector2Int(me.direction.x - me.direction.y, me.direction.x + me.direction.y);
+            offsets[1] = new Vector2Int(me.direction.x * 2, me.direction.y * 2);
+            offsets[2] = new Vector2Int(me.direction.x + me.direction.y, me.direction.y - me.direction.x);
 
             // get nodes at offsets
             GridNode[] nodes = new GridNode[CheckNum];
@@ -65,14 +63,14 @@ namespace UwUverse
             nodes[0] = me.currentNode.GetNeighbour(offsets[0]);
             nodes[1] = me.currentNode.GetNeighbour(offsets[1]);
             nodes[2] = me.currentNode.GetNeighbour(offsets[2]);
-            nodes[3] = me.currentNode.GetNeighbour(m_direction);
+            nodes[3] = me.currentNode.GetNeighbour(me.direction);
 
             // get danger vectors for each node
             Vector2Int[] dangerVectors = new Vector2Int[CheckNum];
 
-            dangerVectors[0] = new Vector2Int(m_direction.y, -m_direction.x);
-            dangerVectors[1] = new Vector2Int(-m_direction.x, -m_direction.y);
-            dangerVectors[2] = new Vector2Int(-m_direction.y, m_direction.x);
+            dangerVectors[0] = new Vector2Int(me.direction.y, -me.direction.x);
+            dangerVectors[1] = new Vector2Int(-me.direction.x, -me.direction.y);
+            dangerVectors[2] = new Vector2Int(-me.direction.y, me.direction.x);
             dangerVectors[3] = dangerVectors[1];
 
             // check nodes for bullets with certain velocity
@@ -102,13 +100,14 @@ namespace UwUverse
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
             cur_node = me.currentNode;
-            tar_node = cur_node.GetNeighbour(Vector2Int.RoundToInt(m_direction));
+            tar_node = cur_node.GetNeighbour(Vector2Int.RoundToInt(me.direction));
 
             me.currentNode.RemoveObject(me.gameObject);
             me.currentNode = tar_node;
             me.currentNode.AddObject(me.gameObject);
 
             LeanTween.move(me.gameObject, GameObject.Find("Grid").GetComponent<TileGrid>().GridCoordToWorldCoord(me.currentNode.position), 0.1f);
+            //me.direction = Vector2Int.zero;
         }
     }
 }

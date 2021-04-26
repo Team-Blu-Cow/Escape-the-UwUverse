@@ -106,7 +106,7 @@ public class Player : GridEntity
         }
         else
         {
-            offsets = new Vector2Int[CheckNum];
+            //offsets = new Vector2Int[CheckNum];
             offsets[0] = Vector2Int.left;
             offsets[1] = Vector2Int.right;
             offsets[2] = Vector2Int.down;
@@ -149,16 +149,31 @@ public class Player : GridEntity
                     Hit(bullets[i], 1);
                 }
             }
-            //if (nodes[i].HasObjectOfType<BlockingEnemy>(ref enemies[i])) // TODO @Adam: change BlockingEnemy
-            //{                                                            // to correct type when not cripplingy
-            //                                                             // tired
-            //
-            //    if (bullets[i] != null && (bullets[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
-            //    {
-            //        TargetNode = CurrentNode;
-            //        Hit(enemies[i], 1);
-            //    }
-            //} // TODO @Adam: implement this once direction can be retrived from enemies,
+            if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))  // TODO @Adam: change BlockingEnemy
+            {                                                               // to correct type when not cripplingy
+                                                                            // tired
+            
+                
+
+                if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
+                {
+                    if (i == 3)//|| (i == 1  && Direction == -enemies[i].GetComponent<GridEntity>().Direction))
+                    {
+                        TargetNode = CurrentNode.GetNeighbour(dangerVectors[i]);
+                    }
+                    else
+                    {
+                        TargetNode = CurrentNode;
+                    } 
+
+                    Hit(enemies[i], 1);
+                }
+                else if(enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero) && i == 3)
+                {
+                    TargetNode = CurrentNode;
+                    Hit(enemies[i], 1);
+                }
+            } // TODO @Adam: implement this once direction can be retrived from enemies,
             //  //this logic should work out of the box once this is done
         }
     }
@@ -195,7 +210,7 @@ public class Player : GridEntity
         }
 
         health -= damage;
-        Debug.Log("Hit");
+        //Debug.Log("Hit");
         if (health < 1)
         {
             player_died?.Invoke();

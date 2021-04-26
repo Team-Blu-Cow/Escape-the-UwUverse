@@ -42,6 +42,8 @@ namespace UwUverse
             m_player = GameObject.FindObjectOfType<Player>();
             if (m_player == null)
                 Debug.LogError("No Player Found");
+
+            direction = Vector2Int.zero;
         }
 
         public override void SetActions()
@@ -131,24 +133,24 @@ namespace UwUverse
         public void CreateIndicators()
         {
             GameObject centreTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GridCoordToWorldCoord(m_targetNode), Quaternion.identity);
-            centreTarget.transform.parent = transform;
+            //centreTarget.transform.parent = transform;
             centreTarget.GetComponent<MortarTarget>().centre = true;
             centreTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode);
 
             GameObject rightTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(1,0).worldPosition, Quaternion.identity);
-            rightTarget.transform.parent = transform;
+            //rightTarget.transform.parent = transform;
             rightTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(1, 0);
 
             GameObject leftTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(-1, 0).worldPosition, Quaternion.identity);
-            leftTarget.transform.parent = transform;
+            //leftTarget.transform.parent = transform;
             leftTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(-1, 0);
 
             GameObject upTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(0, 1).worldPosition, Quaternion.identity);
-            upTarget.transform.parent = transform;
+            //upTarget.transform.parent = transform;
             upTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(0, 1);
 
             GameObject downTarget = GameObject.Instantiate(m_targetIndicatorPrefab, grid.GetNode(m_targetNode).GetNeighbour(0, -1).worldPosition, Quaternion.identity);
-            downTarget.transform.parent = transform;
+            //downTarget.transform.parent = transform;
             downTarget.GetComponent<MortarTarget>().currentNode = grid.GetNode(m_targetNode).GetNeighbour(0, -1);
         }
 

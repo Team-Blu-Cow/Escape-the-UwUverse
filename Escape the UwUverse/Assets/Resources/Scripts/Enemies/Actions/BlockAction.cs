@@ -17,6 +17,8 @@ namespace UwUverse
 
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
+            me.direction = Vector2Int.zero;
+
             const int CheckNum = 4;
 
             Vector2Int[] offsets = new Vector2Int[CheckNum];
@@ -50,6 +52,7 @@ namespace UwUverse
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
             me.StartCoroutine(BlockColourFlash(me.gameObject, 0.1f));
+            MoveAlongPathAction.GetDirection(me);
         }
 
         public IEnumerator BlockColourFlash(GameObject meGObj, float time)
