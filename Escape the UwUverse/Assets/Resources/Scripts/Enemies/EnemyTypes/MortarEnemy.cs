@@ -69,14 +69,7 @@ namespace UwUverse
         public override void PreStep()
         {
             if (PlayerInFiringRange())
-            {
                 state = State.FIRING;
-                //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-            else
-            {
-                //gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            }
 
 
             m_currentAction = m_actionQueue.NextAction((int)state);

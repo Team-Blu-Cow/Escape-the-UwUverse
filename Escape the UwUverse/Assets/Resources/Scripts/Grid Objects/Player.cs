@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -21,6 +21,8 @@ public class Player : GridEntity
     public float maxStepTime = 0.1f;
     public float stepTime = 0;
 
+    public bool testBool = false;
+
     private void Awake()
     {
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
@@ -33,8 +35,8 @@ public class Player : GridEntity
         stepTime = 0;
 
         m_input = new MasterInput();
-        m_input.PlayerMovement.Move.performed += ctx => BeginStep(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));//Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
-        m_input.PlayerMovement.Idle.performed += ctx => BeginStep(Vector2Int.zero);
+        m_input.PlayerMovement.Move.performed += ctx => PreStep(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));//Move(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
+        m_input.PlayerMovement.Idle.performed += ctx => PreStep(Vector2Int.zero);
         m_input.PlayerShoot.Direction.performed += ctx => SetShot(new Vector2Int((int)ctx.ReadValue<Vector2>().x, (int)ctx.ReadValue<Vector2>().y));
         m_input.PlayerShoot.Mouse.performed += ctx => SetShot(DirectionFromMouse());
         m_input.PlayerShoot.Undo.performed += ctx => UndoShot();
@@ -68,10 +70,30 @@ public class Player : GridEntity
         m_input.Disable();
     }
 
-    public void BeginStep(Vector2Int direction)
+    public void PreStep(Vector2Int direction)
     {
         if (GameController.Instance.isPaused)
             return;
+
+        GameController.Instance.stepController.BeginStep();
+
+        StartCoroutine(WaitForGridEntities(direction));
+    }
+
+    public IEnumerator WaitForGridEntities(Vector2Int direction)
+    {
+        while(GameController.StepController().entitiesMoved < GameController.StepController().entityCount-1)
+        {
+            yield return null;
+        }
+
+        BeginStep(direction);
+    }
+
+    public void BeginStep(Vector2Int direction)
+    {
+        //if (GameController.Instance.isPaused)
+        //    return;
 
         Direction = direction;
         if (stepTime > maxStepTime)
@@ -91,14 +113,40 @@ public class Player : GridEntity
                 ShootLogic();
 
                 GameController.StepController().ApplyMove();
-                GameController.Instance.stepController.BeginStep();
+                //GameController.Instance.stepController.BeginStep();
                 stepTime = 0;
+            }
+            else
+            {
+                GameController.StepController().ClearMoves();
             }
         }
     }
 
     private void HitDetectionLogic()
     {
+        /* Offsets & Nodes diagram
+        * 
+        * P = player
+        * n = index in list
+        * ┌───┐
+        * │ n │ = nodes[n]
+        * └───┘
+        * ✢n✢ = dangerVectors[n]
+        * 
+        * 
+        * 
+        *      ┌───┐
+        *      │↓1↓│
+        *      └───┘
+        *┌───┐ ┌───┐ ┌───┐ 
+        *│→0→│ │↓3↓│ │←2←│ 
+        *└───┘ └───┘ └───┘
+        *      ╔═══╗
+        *      ║↑P↑║
+        *      ╚═══╝
+        */
+
         const int CheckNum = 4;
         // get node offsets
         Vector2Int[] offsets = new Vector2Int[CheckNum];
@@ -145,39 +193,175 @@ public class Player : GridEntity
         GameObject[] bullets = new GameObject[CheckNum];
         GameObject[] enemies = new GameObject[CheckNum];
 
-        for (int i = 0; i < CheckNum; i++) // add per object collision logic here
+        if(Direction != Vector2Int.zero)
+            CheckForCollisionsMoving(nodes, dangerVectors);
+        else
+            CheckForCollisionsStationary(nodes, dangerVectors);
+    }
+
+    private void CheckForCollisionsMoving(GridNode[] nodes, Vector2Int[] dangerVectors)
+    {
+        int CheckNum = nodes.Length;
+
+        GameObject[] bullets = new GameObject[CheckNum];
+        GameObject[] enemies = new GameObject[CheckNum];
+
+        for (int i = 0; i < CheckNum; i++)
         {
+            // check nodes for a bullet
             if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
             {
+                // check if the bullet is heading towards the player's next position
                 if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
                 {
                     Hit(bullets[i], 1);
+                    Debug.Log("bullet has hit me");
                 }
             }
-            if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))  // TODO @Adam: change BlockingEnemy
-            {                                                               // to correct type when not cripplingy
-                                                                            // tired
 
+
+            // check nodes for enemy object
+            if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))
+            {
+                // check if enemy is moving to occupy target position
                 if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
                 {
-                    if (i == 3)//|| (i == 1  && Direction == -enemies[i].GetComponent<GridEntity>().Direction))
+                    switch(i)
                     {
-                        TargetNode = CurrentNode.GetNeighbour(dangerVectors[i]);
-                    }
-                    else
-                    {
-                        TargetNode = CurrentNode;
-                    }
 
-                    Hit(enemies[i], 1);
+                        /* Offsets & Nodes diagram
+                         * 
+                         * P = player
+                         * n = index in list
+                         * ┌───┐
+                         * │ n │ = nodes[n]
+                         * └───┘
+                         * ✢n✢ = dangerVectors[n]
+                         * 
+                         *      ┌───┐
+                         *      │↓1↓│
+                         *      └───┘
+                         *┌───┐ ┌───┐ ┌───┐ 
+                         *│→0→│ │↓3↓│ │←2←│ 
+                         *└───┘ └───┘ └───┘
+                         *      ╔═══╗
+                         *      ║↑P↑║
+                         *      ╚═══╝
+                         */
+
+                        case 0:
+                        case 1:
+                        case 2:
+                            {
+                                // check if enemy is moving to occupy target position
+                                if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
+                                {
+                                    //Debug.Log("Enemy has hit me");
+                                    Hit(enemies[i], 1);
+
+                                    PushEntity(dangerVectors[i], TargetNode);
+                                }
+                                break;
+                            }
+
+                        case 3:
+                            {
+                                if (enemies[i] != null)
+                                {
+                                    Hit(enemies[i], 1);
+
+                                    PushEntity(dangerVectors[i], CurrentNode);
+                                }
+                                break;
+                            }
+                    } 
                 }
-                else if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero) && i == 3)
+                if( i == 3 && enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero))
+
                 {
-                    TargetNode = CurrentNode;
                     Hit(enemies[i], 1);
+                    TargetNode = CurrentNode;
                 }
-            } // TODO @Adam: implement this once direction can be retrived from enemies,
-            //  //this logic should work out of the box once this is done
+            }
+        }
+    }
+
+    private void CheckForCollisionsStationary(GridNode[] nodes, Vector2Int[] dangerVectors)
+    {
+        int CheckNum = nodes.Length;
+
+        GameObject[] bullets = new GameObject[CheckNum];
+        GameObject[] enemies = new GameObject[CheckNum];
+
+        for (int i = 0; i < CheckNum; i++)
+        {
+            // check nodes for a bullet
+            if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+            {
+                // check if the bullet is heading towards the player's next position
+                if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
+                {
+                    Hit(bullets[i], 1);
+                    Debug.Log("bullet has hit me");
+                }
+            }
+
+            // check nodes for enemy object
+            if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))
+            {
+                // check if enemy is moving to occupy target position
+                if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
+                {
+                    Debug.Log("Enemy has hit me");
+                    Hit(enemies[i], 1);
+
+                    TargetNode = null;
+
+                    PushEntity(dangerVectors[i], CurrentNode);
+                }
+            }
+        }
+    }
+
+    private void PushEntity(Vector2Int directionVector, GridNode referenceNode)
+    {
+        TargetNode = null;
+
+        // check opposite tile to see if it is free
+        if (referenceNode.GetNeighbour(directionVector).isTraversable)
+        {
+            TargetNode = referenceNode.GetNeighbour(directionVector);
+            return;
+        }
+        else
+        {
+            Vector2Int checkVector;
+
+            if (Direction == -directionVector || Direction == Vector2Int.zero)
+            {
+                // randomly check other adjacent tiles to see if they are free
+                int checkDir = UnityEngine.Random.Range(0, 2);
+                checkDir = (checkDir * 2) - 1;
+
+                checkVector = new Vector2Int(checkDir * directionVector.y, checkDir * directionVector.x);
+            }
+            else
+            {
+                checkVector = -Direction;
+            }
+
+            if (CurrentNode.GetNeighbour(checkVector).isTraversable)
+                TargetNode = referenceNode.GetNeighbour(checkVector);
+            else if (CurrentNode.GetNeighbour(-checkVector).isTraversable)
+                TargetNode = referenceNode.GetNeighbour(-checkVector);
+        }
+
+        // if no free space is available, kill entity
+        if (TargetNode == null)
+        {
+            Debug.Log("I'm Dead");
+            player_died?.Invoke();
+            TargetNode = CurrentNode;
         }
     }
 
