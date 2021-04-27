@@ -56,10 +56,11 @@ namespace UwUverse
             StepEvent?.Invoke();
         }
 
-        public void ClearEvents()
+        public void Reset()
         {
             StepEvent = null;
             PreStepEvent = null;
+            Initialise();
         }
     }
 }

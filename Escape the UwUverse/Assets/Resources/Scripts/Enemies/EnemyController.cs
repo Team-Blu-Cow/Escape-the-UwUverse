@@ -58,8 +58,11 @@ namespace UwUverse
         public void OnDestroy()
         {
             m_brain.currentNode.RemoveObject(gameObject);
-            GameController.StepController().StepEvent -= OnStep;
-            GameController.StepController().PreStepEvent -= OnBeginStep;
+            if (GameController.Instance.stepController != null)
+            {
+                GameController.StepController().StepEvent -= OnStep;
+                GameController.StepController().PreStepEvent -= OnBeginStep;
+            }
             GameController.StepController().RemoveEntity();
         }
 

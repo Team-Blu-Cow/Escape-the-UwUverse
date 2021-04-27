@@ -14,7 +14,7 @@ namespace UwUVerse
         {
             GetComponent<Canvas>().enabled = false;
 
-            // Add on clicks for the butons
+            // Add on clicks for the buttons
             GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
             GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { Resetlevel(m_currentLevel + 1); });
             GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { Resetlevel(m_currentLevel); });
@@ -70,9 +70,9 @@ namespace UwUVerse
 
         private void Resetlevel(int in_level)
         {
-            GameController.StepController().ResetEntities();
-            GameController.StepController().ClearMoves();
-            //GameController.StepController().ClearEvents();
+            //GameController.StepController().ResetEntities();
+            //GameController.StepController().ClearMoves();
+            GameController.Instance.currentLevel = in_level;
             GameController.Instance.SwitchLevel(in_level);
         }
     }

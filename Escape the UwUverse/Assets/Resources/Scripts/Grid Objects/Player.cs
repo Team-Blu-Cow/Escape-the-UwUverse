@@ -25,6 +25,9 @@ public class Player : GridEntity
 
     private void Awake()
     {
+        if(GameController.Instance.stepController != null)
+            GameController.StepController().Reset();
+
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
 
         if (m_gridRef == null)

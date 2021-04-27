@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour
     private Level[] m_levels;
     [SerializeField] private int m_levelAmount;
 
+    public int currentLevel = 0;
+
     public Camera camera
     {
         get
@@ -58,6 +60,10 @@ public class GameController : MonoBehaviour
     {
         get
         {
+            if(_Instance == null)
+            {
+                _Instance = new GameController();
+            }
             return _Instance;
         }
     }
@@ -111,6 +117,7 @@ public class GameController : MonoBehaviour
 
     public void SwitchLevel(int in_level)
     {
+        currentLevel = in_level;
         m_levelLoader.SwitchScene("Level-" + in_level);
     }
 
