@@ -78,9 +78,9 @@ namespace UwUverse
 
             for (int i = 0; i < CheckNum; i++)
             {
-                if (nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+                if (nodes[i]!=null && nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
                 {
-                    if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
+                    if (bullets[i] != null && bullets[i].GetComponent<bullet>().m_direction != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
                     {
                         moveSafe = false;
                         bullets[i].GetComponent<bullet>().BulletDestroy();

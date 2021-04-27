@@ -62,8 +62,8 @@ namespace UwUverse
             {
                 GameController.StepController().StepEvent -= OnStep;
                 GameController.StepController().PreStepEvent -= OnBeginStep;
+                GameController.StepController().RemoveEntity();
             }
-            GameController.StepController().RemoveEntity();
         }
 
         public override void Hit(GameObject obj, int damage)

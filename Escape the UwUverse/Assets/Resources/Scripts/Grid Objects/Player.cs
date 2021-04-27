@@ -77,10 +77,14 @@ public class Player : GridEntity
     {
         if (GameController.Instance.isPaused)
             return;
-
+        
         GameController.Instance.stepController.BeginStep();
 
         StartCoroutine(WaitForGridEntities(direction));
+        //BeginStep(direction);
+
+        //GameController.Instance.stepController.BeginStep();
+        //GameController.Instance.stepController.BeginStep();
     }
 
     public IEnumerator WaitForGridEntities(Vector2Int direction)
@@ -95,22 +99,16 @@ public class Player : GridEntity
 
     public void BeginStep(Vector2Int direction)
     {
-        //if (GameController.Instance.isPaused)
-        //    return;
+        if (GameController.Instance.isPaused)
+            return;
 
         Direction = direction;
         if (stepTime > maxStepTime)
         {
             TargetNode = CurrentNode.GetNeighbour(Direction);
 
-            //hit logic
-            // if (true)
-            // {
-            //     Hit(/*hit obj*/null, 0);
-            // }
-
             //Shooting logic
-            if (TargetNode != null && !TargetNode.isWall && !TargetNode.isHole)
+            if (TargetNode != null && TargetNode.isTraversable)
             {
                 HitDetectionLogic();
                 ShootLogic();
@@ -118,10 +116,6 @@ public class Player : GridEntity
                 GameController.StepController().ApplyMove();
                 //GameController.Instance.stepController.BeginStep();
                 stepTime = 0;
-            }
-            else
-            {
-                GameController.StepController().ClearMoves();
             }
         }
     }

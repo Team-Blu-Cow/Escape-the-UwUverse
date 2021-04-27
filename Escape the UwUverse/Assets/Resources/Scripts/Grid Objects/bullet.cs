@@ -17,6 +17,8 @@ public class bullet : GridEntity
 
     private void Awake()
     {
+        m_direction = Vector2Int.zero;
+
         GameController.StepController().PreStepEvent += BeginStep;
         GameController.StepController().StepEvent += Move;
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
@@ -26,7 +28,6 @@ public class bullet : GridEntity
 
     public void BeginStep()
     {
-        GameController.StepController().ApplyMove();
         GameController.StepController().ApplyMove();
     }
 
@@ -45,7 +46,8 @@ public class bullet : GridEntity
         }
         else
         {
-            Destroy(gameObject);
+            BulletDestroy();
+            //Destroy(gameObject);
         }
     }
 
@@ -55,9 +57,12 @@ public class bullet : GridEntity
         //Debug.Log("bullet destroyed");
         //Player.m_PlayerMoved -= Move;
         //GameController.StepController().AddEntity(); // silly goose @jay :3
-        GameController.StepController().PreStepEvent -= BeginStep;
-        GameController.StepController().StepEvent -= Move;
-        GameController.StepController().RemoveEntity();
+        if (GameController.StepController() != null)
+        {
+            GameController.StepController().PreStepEvent -= BeginStep;
+            GameController.StepController().StepEvent -= Move;
+            GameController.StepController().RemoveEntity();
+        }
     }
 
     public void BulletDestroy()
