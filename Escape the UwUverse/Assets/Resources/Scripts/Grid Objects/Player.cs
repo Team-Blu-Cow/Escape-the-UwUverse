@@ -360,7 +360,7 @@ public class Player : GridEntity
         if (TargetNode == null)
         {
             Debug.Log("I'm Dead");
-            player_died?.Invoke();
+            player_died?.Invoke(true);
             TargetNode = CurrentNode;
         }
     }

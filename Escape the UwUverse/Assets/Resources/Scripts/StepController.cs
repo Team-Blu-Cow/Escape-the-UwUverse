@@ -55,5 +55,11 @@ namespace UwUverse
             ClearMoves();
             StepEvent?.Invoke();
         }
+
+        public void ClearEvents()
+        {
+            StepEvent = null;
+            PreStepEvent = null;
+        }
     }
 }

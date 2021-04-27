@@ -42,6 +42,8 @@ namespace UwUVerse
                 GetComponentsInChildren<Button>()[1].GetComponentInChildren<TextMeshProUGUI>().enabled = true;
             }
 
+            
+
             SetWin(in_died);
             SetStats();
         }
@@ -70,6 +72,7 @@ namespace UwUVerse
         {
             GameController.StepController().ResetEntities();
             GameController.StepController().ClearMoves();
+            //GameController.StepController().ClearEvents();
             GameController.Instance.SwitchLevel(in_level);
         }
     }
