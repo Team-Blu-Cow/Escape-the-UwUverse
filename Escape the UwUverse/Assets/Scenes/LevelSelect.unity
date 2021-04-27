@@ -180,6 +180,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8e6c0f8021fb9a4694625f5234944f9, type: 3}
+--- !u!114 &594816296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3531709131749803194, guid: e8e6c0f8021fb9a4694625f5234944f9, type: 3}
+  m_PrefabInstance: {fileID: 594816295}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce4e53dce2989a448d33ca5b372294e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &657754679
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,17 +442,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 479e197d028a40f4f8f952f1a575b08e, type: 3}
---- !u!114 &879521141 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6229825350706406822, guid: 479e197d028a40f4f8f952f1a575b08e, type: 3}
-  m_PrefabInstance: {fileID: 879521140}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90d7d00b878ee6419a43c53a64750cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &882047097
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,8 +626,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879521141}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+      - m_Target: {fileID: 594816296}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
         m_MethodName: SwitchScene
         m_Mode: 5
         m_Arguments:

@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90d7d00b878ee6419a43c53a64750cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_camera: {fileID: 0}
+  m_levelAmount: 3
+  m_stepController:
+    m_entityCount: 0
+    m_entitiesMoved: 0
+  isPaused: 0

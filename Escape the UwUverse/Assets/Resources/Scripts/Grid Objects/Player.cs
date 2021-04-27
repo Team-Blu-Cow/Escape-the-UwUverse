@@ -7,7 +7,7 @@ using UwUverse;
 
 public class Player : GridEntity
 {
-    public static event Action player_died;
+    public static event Action<bool> player_died;
 
     private Vector2Int m_shotDirection = Vector2Int.zero;
     private MasterInput m_input;
@@ -54,6 +54,8 @@ public class Player : GridEntity
 
         CurrentNode = m_gridRef.GetNearestNode(transform.position);
         CurrentNode.AddObject(gameObject);
+
+        health = maxHealth;
     }
 
     private void OnEnable()
@@ -155,8 +157,6 @@ public class Player : GridEntity
             if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))  // TODO @Adam: change BlockingEnemy
             {                                                               // to correct type when not cripplingy
                                                                             // tired
-            
-                
 
                 if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
                 {
@@ -167,11 +167,11 @@ public class Player : GridEntity
                     else
                     {
                         TargetNode = CurrentNode;
-                    } 
+                    }
 
                     Hit(enemies[i], 1);
                 }
-                else if(enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero) && i == 3)
+                else if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero) && i == 3)
                 {
                     TargetNode = CurrentNode;
                     Hit(enemies[i], 1);
@@ -216,7 +216,7 @@ public class Player : GridEntity
         //Debug.Log("Hit");
         if (health < 1)
         {
-            player_died?.Invoke();
+            player_died?.Invoke(true);
             /*die();*/
         }
     }

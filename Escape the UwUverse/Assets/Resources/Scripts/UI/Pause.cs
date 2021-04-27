@@ -6,6 +6,13 @@ public class Pause : MonoBehaviour
     private Canvas m_canvas;
 
     [SerializeField] private Canvas m_optionsCanvas;
+    private MasterInput m_input;
+
+    private void Awake()
+    {
+        m_input = new MasterInput();
+        m_input.Interact.Pause.performed += ctx => TogglePause();
+    }
 
     private void Start()
     {
@@ -13,6 +20,16 @@ public class Pause : MonoBehaviour
         m_canvas.enabled = false;
 
         GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
+    }
+
+    private void OnEnable()
+    {
+        m_input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        m_input.Disable();
     }
 
     public void TogglePause()

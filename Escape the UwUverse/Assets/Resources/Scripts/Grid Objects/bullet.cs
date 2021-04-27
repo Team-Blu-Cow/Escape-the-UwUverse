@@ -45,11 +45,11 @@ public class bullet : GridEntity
         }
         else
         {
-            BulletDestroy();
+            Destroy(gameObject);
         }
     }
 
-    public void BulletDestroy()
+    private void OnDestroy()
     {
         m_currentNode.RemoveObject(gameObject);
         //Debug.Log("bullet destroyed");
@@ -58,6 +58,10 @@ public class bullet : GridEntity
         GameController.StepController().PreStepEvent -= BeginStep;
         GameController.StepController().StepEvent -= Move;
         GameController.StepController().RemoveEntity();
+    }
+
+    public void BulletDestroy()
+    {
         Destroy(gameObject);
     }
 }

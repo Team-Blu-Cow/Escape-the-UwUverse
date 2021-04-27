@@ -12,6 +12,8 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
+        GameController.Instance.isPaused = false;
+        GameController.Instance.LevelLoader = this;
         transition = GetComponentInChildren<Animator>();
     }
 

@@ -342,13 +342,21 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3212281-dcbb-4a31-be42-c1ffc6088088"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""787a5a24-4e6c-4553-9bc3-22822ef401ac"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/backspace"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -388,6 +396,17 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""153b67ae-0b96-4c5b-a342-408de35706c5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -407,6 +426,7 @@ public class @MasterInput : IInputActionCollection, IDisposable
         m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
         m_Interact_Cancel = m_Interact.FindAction("Cancel", throwIfNotFound: true);
         m_Interact_Confirm = m_Interact.FindAction("Confirm", throwIfNotFound: true);
+        m_Interact_Pause = m_Interact.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -548,12 +568,14 @@ public class @MasterInput : IInputActionCollection, IDisposable
     private IInteractActions m_InteractActionsCallbackInterface;
     private readonly InputAction m_Interact_Cancel;
     private readonly InputAction m_Interact_Confirm;
+    private readonly InputAction m_Interact_Pause;
     public struct InteractActions
     {
         private @MasterInput m_Wrapper;
         public InteractActions(@MasterInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Cancel => m_Wrapper.m_Interact_Cancel;
         public InputAction @Confirm => m_Wrapper.m_Interact_Confirm;
+        public InputAction @Pause => m_Wrapper.m_Interact_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Interact; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -569,6 +591,9 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Confirm.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
                 @Confirm.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
                 @Confirm.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnConfirm;
+                @Pause.started -= m_Wrapper.m_InteractActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_InteractActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_InteractActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_InteractActionsCallbackInterface = instance;
             if (instance != null)
@@ -579,6 +604,9 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Confirm.started += instance.OnConfirm;
                 @Confirm.performed += instance.OnConfirm;
                 @Confirm.canceled += instance.OnConfirm;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -598,5 +626,6 @@ public class @MasterInput : IInputActionCollection, IDisposable
     {
         void OnCancel(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -7,6 +7,7 @@ namespace UwUVerse
     public class LevelEndUI : MonoBehaviour
     {
         [SerializeField] private int m_currentLevel;
+        System.Action<bool> handler;
 
         // Start is called before the first frame update
         private void Start()
@@ -15,12 +16,22 @@ namespace UwUVerse
 
             // Add on clicks for the butons
             GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
-            GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { GameController.Instance.SwitchLevel(m_currentLevel + 1); });
-            GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { GameController.Instance.SwitchLevel(m_currentLevel); });
+            GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { Resetlevel(m_currentLevel + 1); });
+            GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { Resetlevel(m_currentLevel); });
+
+            handler = (in_) => GameReset(in_);
+
+            Player.player_died += handler;
+        }
+
+        private void OnDestroy()
+        {
+            Player.player_died -= handler;
         }
 
         public void GameReset(bool in_died)
         {
+            GameController.Instance.isPaused = true;
             GetComponent<Canvas>().enabled = true;
             GetComponentsInChildren<Button>()[1].interactable = false;
             GetComponentsInChildren<Button>()[1].GetComponentInChildren<TextMeshProUGUI>().enabled = false;
@@ -53,6 +64,13 @@ namespace UwUVerse
                 "Moves Taken: \n" +
                 "Enemies Killed: \n" +
                 "Shots Fired: \n";
+        }
+
+        private void Resetlevel(int in_level)
+        {
+            GameController.StepController().ResetEntities();
+            GameController.StepController().ClearMoves();
+            GameController.Instance.SwitchLevel(in_level);
         }
     }
 }

@@ -17,6 +17,12 @@ public class GameController : MonoBehaviour
 
     private LevelLoader m_levelLoader;
 
+    public LevelLoader LevelLoader
+    {
+        get { return m_levelLoader; }
+        set { m_levelLoader = value; }
+    }
+
     private struct Level
     {
         public bool complete;
@@ -57,6 +63,7 @@ public class GameController : MonoBehaviour
     }
 
     public bool isPaused;
+
     private void Awake()
     {
         isPaused = false;
@@ -100,7 +107,6 @@ public class GameController : MonoBehaviour
     public void SwitchScene(string in_scene)
     {
         m_levelLoader.SwitchScene(in_scene);
-        m_levelLoader = FindObjectOfType<LevelLoader>();
     }
 
     public void SwitchLevel(int in_level)
