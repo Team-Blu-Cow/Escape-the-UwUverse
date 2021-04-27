@@ -13,17 +13,18 @@ public class bullet : GridEntity
         m_currentNode.AddObject(gameObject);
         m_direction = in_direction;
         transform.position = m_gridRef.GridCoordToWorldCoord(m_currentNode.position);
+        GameController.StepController().PreStepEvent += BeginStep;
+        GameController.StepController().StepEvent += Move;
+        GameController.StepController().AddEntity();
+        GameController.StepController().ApplyMove();
     }
 
     private void Awake()
     {
-        m_direction = Vector2Int.zero;
+        //m_direction = Vector2Int.zero;
 
-        GameController.StepController().PreStepEvent += BeginStep;
-        GameController.StepController().StepEvent += Move;
+        
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
-
-        GameController.StepController().AddEntity();
     }
 
     public void BeginStep()
