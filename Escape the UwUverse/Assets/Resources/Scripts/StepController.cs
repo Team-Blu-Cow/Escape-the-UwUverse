@@ -23,6 +23,7 @@ namespace UwUverse
 
         public void AddEntity()     => m_entityCount++;
         public void RemoveEntity()  => m_entityCount--;
+        public void ResetEntities() => m_entityCount = 0;
 
         public void ApplyMove()     => m_entitiesMoved++;
         public void ClearMoves()    => m_entitiesMoved = 0;

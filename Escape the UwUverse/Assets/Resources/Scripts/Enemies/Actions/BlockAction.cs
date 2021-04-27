@@ -14,7 +14,6 @@ namespace UwUverse
             get { return m_id; }
             set { m_id = value; }
         }
-
         public void CalculateStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
             me.direction = Vector2Int.zero;
@@ -52,7 +51,7 @@ namespace UwUverse
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
             me.StartCoroutine(BlockColourFlash(me.gameObject, 0.1f));
-            MoveAlongPathAction.GetDirection(me);
+            //MoveAlongPathAction.GetDirection(me);
         }
 
         public IEnumerator BlockColourFlash(GameObject meGObj, float time)
