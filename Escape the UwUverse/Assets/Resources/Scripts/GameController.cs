@@ -56,8 +56,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public bool isPaused;
     private void Awake()
     {
+        isPaused = false;
+
         if (_Instance != null && _Instance != this)
             Destroy(this.gameObject);
         else

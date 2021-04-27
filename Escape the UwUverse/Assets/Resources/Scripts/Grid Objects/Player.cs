@@ -68,6 +68,9 @@ public class Player : GridEntity
 
     public void BeginStep(Vector2Int direction)
     {
+        if (GameController.Instance.isPaused)
+            return;
+
         Direction = direction;
         if (stepTime > maxStepTime)
         {

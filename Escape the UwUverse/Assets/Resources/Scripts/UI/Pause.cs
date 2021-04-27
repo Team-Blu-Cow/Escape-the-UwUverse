@@ -19,6 +19,7 @@ public class Pause : MonoBehaviour
     {
         // Get if the options are already open or not
         bool open = m_canvas.isActiveAndEnabled;
+        GameController.Instance.isPaused = !GameController.Instance.isPaused;
 
         if (open)
         {
