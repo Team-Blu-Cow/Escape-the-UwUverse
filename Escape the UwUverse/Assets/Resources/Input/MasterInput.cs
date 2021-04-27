@@ -33,6 +33,22 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ZoomIn"",
+                    ""type"": ""Button"",
+                    ""id"": ""09da51e9-1c98-457f-99f2-035464370d0a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ZoomOut"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab00c948-fe65-4f1a-9627-e170429cf872"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -154,6 +170,28 @@ public class @MasterInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Idle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d1c5228-f562-4ed7-9761-adfab46914be"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomIn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0fe6290-f981-4de7-aaf1-3991fe55ce01"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomOut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -417,6 +455,8 @@ public class @MasterInput : IInputActionCollection, IDisposable
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
         m_PlayerMovement_Idle = m_PlayerMovement.FindAction("Idle", throwIfNotFound: true);
+        m_PlayerMovement_ZoomIn = m_PlayerMovement.FindAction("ZoomIn", throwIfNotFound: true);
+        m_PlayerMovement_ZoomOut = m_PlayerMovement.FindAction("ZoomOut", throwIfNotFound: true);
         // PlayerShoot
         m_PlayerShoot = asset.FindActionMap("PlayerShoot", throwIfNotFound: true);
         m_PlayerShoot_Mouse = m_PlayerShoot.FindAction("Mouse", throwIfNotFound: true);
@@ -478,12 +518,16 @@ public class @MasterInput : IInputActionCollection, IDisposable
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_Move;
     private readonly InputAction m_PlayerMovement_Idle;
+    private readonly InputAction m_PlayerMovement_ZoomIn;
+    private readonly InputAction m_PlayerMovement_ZoomOut;
     public struct PlayerMovementActions
     {
         private @MasterInput m_Wrapper;
         public PlayerMovementActions(@MasterInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMovement_Move;
         public InputAction @Idle => m_Wrapper.m_PlayerMovement_Idle;
+        public InputAction @ZoomIn => m_Wrapper.m_PlayerMovement_ZoomIn;
+        public InputAction @ZoomOut => m_Wrapper.m_PlayerMovement_ZoomOut;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -499,6 +543,12 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Idle.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
                 @Idle.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
                 @Idle.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnIdle;
+                @ZoomIn.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomIn;
+                @ZoomIn.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomIn;
+                @ZoomIn.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomIn;
+                @ZoomOut.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomOut;
+                @ZoomOut.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomOut;
+                @ZoomOut.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnZoomOut;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -509,6 +559,12 @@ public class @MasterInput : IInputActionCollection, IDisposable
                 @Idle.started += instance.OnIdle;
                 @Idle.performed += instance.OnIdle;
                 @Idle.canceled += instance.OnIdle;
+                @ZoomIn.started += instance.OnZoomIn;
+                @ZoomIn.performed += instance.OnZoomIn;
+                @ZoomIn.canceled += instance.OnZoomIn;
+                @ZoomOut.started += instance.OnZoomOut;
+                @ZoomOut.performed += instance.OnZoomOut;
+                @ZoomOut.canceled += instance.OnZoomOut;
             }
         }
     }
@@ -615,6 +671,8 @@ public class @MasterInput : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnIdle(InputAction.CallbackContext context);
+        void OnZoomIn(InputAction.CallbackContext context);
+        void OnZoomOut(InputAction.CallbackContext context);
     }
     public interface IPlayerShootActions
     {

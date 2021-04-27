@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour
 {
+    private MasterInput m_input;
+
     private List<GameObject> m_zoomedRooms = new List<GameObject>();
     private List<GameObject> m_unzoomedRooms = new List<GameObject>();
 
@@ -29,6 +31,20 @@ public class RoomController : MonoBehaviour
     private void Awake()
     {
         camLookPoint = GameObject.Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
+        m_input = new MasterInput();
+
+        m_input.PlayerMovement.ZoomIn.performed += ctx => m_cameraIsZoomed = true;
+        m_input.PlayerMovement.ZoomOut.performed += ctx => m_cameraIsZoomed = false;
+    }
+
+    private void OnEnable()
+    {
+        m_input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        m_input.Disable();
     }
 
     private void OnDestroy()
