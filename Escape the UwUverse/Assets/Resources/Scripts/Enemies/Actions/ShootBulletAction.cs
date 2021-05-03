@@ -88,11 +88,9 @@ namespace UwUverse
         {
             if(m_canShoot == true)
             {
-                //GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/bullet"), Vector3.zero, Quaternion.identity);
-                //bullet.GetComponent<bullet>().createBullet(me.currentNode.GetNeighbour(me.direction), me.direction);
+                GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/bullet"), Vector3.zero, Quaternion.identity);
+                bullet.GetComponent<bullet>().createBullet(me.currentNode.GetNeighbour(me.direction), me.direction);
             }
-
-            //MoveAlongPathAction.GetDirection(me);
         }
     }
 }

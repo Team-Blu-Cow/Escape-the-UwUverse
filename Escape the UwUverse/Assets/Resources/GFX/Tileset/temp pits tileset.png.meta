@@ -1,0 +1,864 @@
+fileFormatVersion: 2
+guid: a645d0990dfcf8a40bbb536ad7438474
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1915082092056210105
+    second: temp pits tileset_0
+  - first:
+      213: 732246359717149099
+    second: temp pits tileset_1
+  - first:
+      213: 6172040508812630246
+    second: temp pits tileset_2
+  - first:
+      213: -4591594701831916622
+    second: temp pits tileset_3
+  - first:
+      213: -5485284457202709255
+    second: temp pits tileset_4
+  - first:
+      213: -6834218941992468972
+    second: temp pits tileset_5
+  - first:
+      213: 8922571642203779844
+    second: temp pits tileset_6
+  - first:
+      213: -188083924599520543
+    second: temp pits tileset_7
+  - first:
+      213: 6335593455637271129
+    second: temp pits tileset_8
+  - first:
+      213: -3837833603794953896
+    second: temp pits tileset_9
+  - first:
+      213: -939582213763728495
+    second: temp pits tileset_10
+  - first:
+      213: 8323476178030078669
+    second: temp pits tileset_11
+  - first:
+      213: 6304769213153692708
+    second: temp pits tileset_12
+  - first:
+      213: -5230791085567533159
+    second: temp pits tileset_13
+  - first:
+      213: 8473426170587028180
+    second: temp pits tileset_14
+  - first:
+      213: -4749789017302669976
+    second: temp pits tileset_15
+  - first:
+      213: -7447251202126167250
+    second: temp pits tileset_16
+  - first:
+      213: 7395637343235618995
+    second: temp pits tileset_17
+  - first:
+      213: -8535248167102588035
+    second: temp pits tileset_18
+  - first:
+      213: 7473337806587214796
+    second: temp pits tileset_19
+  - first:
+      213: 4087281236643294015
+    second: temp pits tileset_20
+  - first:
+      213: 4652990754018849698
+    second: temp pits tileset_21
+  - first:
+      213: 8345340108047931312
+    second: temp pits tileset_22
+  - first:
+      213: 7597096636029102074
+    second: temp pits tileset_23
+  - first:
+      213: -6734316899965971424
+    second: temp pits tileset_24
+  - first:
+      213: -6105477557202021070
+    second: temp pits tileset_25
+  - first:
+      213: -6252501568124226007
+    second: temp pits tileset_26
+  - first:
+      213: 806545839336485056
+    second: temp pits tileset_27
+  - first:
+      213: -7248882105133323813
+    second: temp pits tileset_28
+  - first:
+      213: -1306216132072706683
+    second: temp pits tileset_29
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 198
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: temp pits tileset_0
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bae8b4240db39a10800000000000000
+      internalID: 1915082092056210105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_1
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba9730f3f26792a00800000000000000
+      internalID: 732246359717149099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_2
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e81913542e77a550800000000000000
+      internalID: 6172040508812630246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_3
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b33ebc22f06740c0800000000000000
+      internalID: -4591594701831916622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_4
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fc067439da50e3b0800000000000000
+      internalID: -5485284457202709255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_5
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41efa4dd41af721a0800000000000000
+      internalID: -6834218941992468972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_6
+      rect:
+        serializedVersion: 2
+        x: 1401
+        y: 601
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 403b78082a753db70800000000000000
+      internalID: 8922571642203779844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e2c846caaac36df0800000000000000
+      internalID: -188083924599520543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_8
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9529c843eac8ce750800000000000000
+      internalID: 6335593455637271129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_9
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8599ebacba64dbac0800000000000000
+      internalID: -3837833603794953896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_10
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b765764fee5f2f0800000000000000
+      internalID: -939582213763728495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_11
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcaa8e7fb7de28370800000000000000
+      internalID: 8323476178030078669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_12
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c48dcf13a0f7750800000000000000
+      internalID: 6304769213153692708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_13
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f977ab83f7867b0800000000000000
+      internalID: -5230791085567533159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_14
+      rect:
+        serializedVersion: 2
+        x: 1401
+        y: 401
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4da96504538a79570800000000000000
+      internalID: 8473426170587028180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8656f91ed0c551eb0800000000000000
+      internalID: -4749789017302669976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_16
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e234b282d7c06a890800000000000000
+      internalID: -7447251202126167250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_17
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b83c2bdaf492a660800000000000000
+      internalID: 7395637343235618995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_18
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7bdb028305bc8980800000000000000
+      internalID: -8535248167102588035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_19
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccbb020c321a6b760800000000000000
+      internalID: 7473337806587214796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_20
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b2e3f11a0f8b830800000000000000
+      internalID: 4087281236643294015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_21
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a3787c207eb29040800000000000000
+      internalID: 4652990754018849698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_22
+      rect:
+        serializedVersion: 2
+        x: 1401
+        y: 201
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b7540edc9a90d370800000000000000
+      internalID: 8345340108047931312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_23
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af764daa32f4e6960800000000000000
+      internalID: 7597096636029102074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_24
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0245e9c9576ea82a0800000000000000
+      internalID: -6734316899965971424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_25
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2359ada828cf44ba0800000000000000
+      internalID: -6105477557202021070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_26
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 926f16273f6aa39a0800000000000000
+      internalID: -6252501568124226007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_27
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c078b8ea2d613b00800000000000000
+      internalID: 806545839336485056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_28
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd9a7d0b12cc66b90800000000000000
+      internalID: -7248882105133323813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: temp pits tileset_29
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 1
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58debe739536fdde0800000000000000
+      internalID: -1306216132072706683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
