@@ -63,9 +63,9 @@ namespace UwUVerse
         private void SetStats()
         {
             GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Stats: \n" +
-                "Moves Taken: \n" +
-                "Enemies Killed: \n" +
-                "Shots Fired: \n";
+                "Moves Taken:"      + GameController.LevelStats().moves         + "\n" +
+                "Enemies Killed:"   + GameController.LevelStats().enemiesKilled + "\n" +
+                "Shots Fired:"      + GameController.LevelStats().shots         + "\n";
         }
 
         private void Resetlevel(int in_level)

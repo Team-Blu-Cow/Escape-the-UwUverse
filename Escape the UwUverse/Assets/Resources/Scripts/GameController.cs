@@ -49,12 +49,17 @@ public class GameController : MonoBehaviour
     { get { return camera.GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>(); } }
 
     [SerializeField] private StepController m_stepController;
-
     public StepController stepController
     { get { return m_stepController; } }
-
     public static StepController StepController()
     { return Instance.stepController; }
+
+    [SerializeField] private LevelStatistics m_levelStatistics;
+    public LevelStatistics levelStatistics
+    { get { return m_levelStatistics; } }
+    public static LevelStatistics LevelStats()
+    { return Instance.levelStatistics; }
+    
 
     public static GameController Instance
     {

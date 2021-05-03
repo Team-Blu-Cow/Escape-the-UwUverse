@@ -64,6 +64,8 @@ public class Player : GridEntity
         CurrentNode.AddObject(gameObject);
 
         health = maxHealth;
+
+        GameController.LevelStats().Reset();
     }
 
     private void OnEnable()
@@ -369,6 +371,7 @@ public class Player : GridEntity
                 Shoot(CurrentNode);
             m_hasShot = false;
             shotCooldown = -1;
+            GameController.LevelStats().AddShot();
         }
     }
 
@@ -379,6 +382,7 @@ public class Player : GridEntity
         CurrentNode.AddObject(gameObject);
         LeanTween.move(gameObject, m_gridRef.GridCoordToWorldCoord(CurrentNode.position), 0.1f);
         shotCooldown = (shotCooldown <= 3) ? shotCooldown + 1 : 3;
+        GameController.LevelStats().AddMove();
     }
 
     public override void Hit(GameObject obj, int damage)
