@@ -157,5 +157,19 @@ namespace UwUverse
         {
             Destroy(gameObject);
         }
+
+        virtual public bool CheckTileForDanger()
+        {
+            GameObject bulletGO = null;
+            if (currentNode.HasObjectOfType<bullet>(ref bulletGO))
+            {
+                bulletGO.GetComponent<bullet>().BulletDestroy();
+                controller.Hit(null, 1);
+                //if (me.hp <= 0)
+                //    me.m_isDead = true;
+                return true;
+            }
+            return false;
+        }
     }
 }

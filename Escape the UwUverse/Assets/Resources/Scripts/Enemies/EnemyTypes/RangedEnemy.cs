@@ -44,6 +44,11 @@ namespace UwUverse
             }
         }
 
+        private void Update()
+        {
+            CheckTileForDanger();
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {

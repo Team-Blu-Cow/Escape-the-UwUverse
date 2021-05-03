@@ -69,6 +69,8 @@ namespace UwUverse
         public override void Hit(GameObject obj, int damage)
         {
             m_brain.hp -= damage;
+            if (m_brain.hp <= 0)
+                m_brain.m_isDead = true;
         }
     }
 }

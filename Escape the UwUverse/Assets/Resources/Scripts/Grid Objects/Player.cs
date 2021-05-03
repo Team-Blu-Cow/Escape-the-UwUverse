@@ -47,8 +47,11 @@ public class Player : GridEntity
 
     private void OnDestroy()
     {
-        GameController.StepController().RemoveEntity();
-        GameController.StepController().StepEvent -= Move;
+        if (GameController.Instance != null && GameController.StepController() != null)
+        {
+            GameController.StepController().RemoveEntity();
+            GameController.StepController().StepEvent -= Move;
+        }
     }
 
     // Start is called before the first frame update
@@ -191,7 +194,7 @@ public class Player : GridEntity
             CheckForCollisionsStationary(nodes, dangerVectors);
     }
 
-    private void CheckForCollisionsMoving(GridNode[] nodes, Vector2Int[] dangerVectors)
+    public override void CheckForCollisionsMoving(GridNode[] nodes, Vector2Int[] dangerVectors)
     {
         int CheckNum = nodes.Length;
 
@@ -276,7 +279,7 @@ public class Player : GridEntity
         }
     }
 
-    private void CheckForCollisionsStationary(GridNode[] nodes, Vector2Int[] dangerVectors)
+    public override void CheckForCollisionsStationary(GridNode[] nodes, Vector2Int[] dangerVectors)
     {
         int CheckNum = nodes.Length;
 
@@ -357,7 +360,7 @@ public class Player : GridEntity
 
     private void ShootLogic()
     {
-        if (m_hasShot)
+        if (m_hasShot && shotCooldown >= 3)
         {
             // shoot if: node had no bullets already, wont be occupied by the player or a wall next step
             if (m_shotDirection == Direction && !CurrentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>())
@@ -365,6 +368,7 @@ public class Player : GridEntity
             else if (!CurrentNode.GetNeighbour(m_shotDirection).HasObjectOfType<bullet>() && !CurrentNode.HasObjectOfType<bullet>())
                 Shoot(CurrentNode);
             m_hasShot = false;
+            shotCooldown = -1;
         }
     }
 
@@ -374,6 +378,7 @@ public class Player : GridEntity
         CurrentNode = TargetNode;
         CurrentNode.AddObject(gameObject);
         LeanTween.move(gameObject, m_gridRef.GridCoordToWorldCoord(CurrentNode.position), 0.1f);
+        shotCooldown = (shotCooldown <= 3) ? shotCooldown + 1 : 3;
     }
 
     public override void Hit(GameObject obj, int damage)

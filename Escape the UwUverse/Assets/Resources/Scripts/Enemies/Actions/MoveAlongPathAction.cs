@@ -42,11 +42,7 @@ namespace UwUverse
         {
             bool moveSafe = true;
 
-            if (me.currentNode.HasObjectOfType<bullet>())
-            {
-                moveSafe = false;
-                return;
-            }
+            me.CheckTileForDanger();
 
             const int CheckNum = 4;
 
@@ -92,8 +88,8 @@ namespace UwUverse
             if (!moveSafe)
             {
                 me.controller.Hit(null, 1);
-                if (me.hp <= 0)
-                    me.m_isDead = !moveSafe;
+                //if (me.hp <= 0)
+                //    me.m_isDead = !moveSafe;
             }
         }
 
@@ -108,6 +104,8 @@ namespace UwUverse
 
             LeanTween.move(me.gameObject, GameObject.Find("Grid").GetComponent<TileGrid>().GridCoordToWorldCoord(me.currentNode.position), 0.1f);
             //me.direction = Vector2Int.zero;
+
+            
         }
     }
 }

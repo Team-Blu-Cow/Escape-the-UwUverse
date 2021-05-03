@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,4 +40,66 @@ public class GridEntity : MonoBehaviour
         //Debug.LogWarning("Default hit called!");
         Debug.Log("I've been Hit");
     }
+
+    // TODO: @Jay probably redundant
+    public virtual void CheckForCollisionsMoving(GridNode[] nodes, Vector2Int[] dangerVectors)
+    {
+        /* Offsets & Nodes diagram
+        * 
+        * P = player
+        * n = index in list
+        * ┌───┐
+        * │ n │ = nodes[n]
+        * └───┘
+        * ✢n✢ = dangerVectors[n]
+        * 
+        *      ┌───┐
+        *      │↓1↓│
+        *      └───┘
+        *┌───┐ ┌───┐ ┌───┐ 
+        *│→0→│ │↓3↓│ │←2←│ 
+        *└───┘ └───┘ └───┘
+        *      ╔═══╗
+        *      ║↑P↑║
+        *      ╚═══╝
+        */
+
+        int CheckNum = nodes.Length;
+
+        GameObject[] bullets = new GameObject[CheckNum];
+
+        for (int i = 0; i < CheckNum; i++)
+        {
+            // check nodes for a bullet
+            if (nodes[i] != null && nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+            {
+                // check if the bullet is heading towards the player's next position
+                if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
+                {
+                    Hit(bullets[i], 1);
+                }
+            }
+        }
+    }
+
+    public virtual void CheckForCollisionsStationary(GridNode[] nodes, Vector2Int[] dangerVectors)
+    {
+        int CheckNum = nodes.Length;
+
+        GameObject[] bullets = new GameObject[CheckNum];
+
+        for (int i = 0; i < CheckNum; i++)
+        {
+            // check nodes for a bullet
+            if (nodes[i] != null && nodes[i].HasObjectOfType<bullet>(ref bullets[i]))
+            {
+                // check if the bullet is heading towards the player's next position
+                if (bullets[i] != null && (bullets[i].GetComponent<bullet>().m_direction == dangerVectors[i]))
+                {
+                    Hit(bullets[i], 1);
+                }
+            }
+        }
+    }
+
 }

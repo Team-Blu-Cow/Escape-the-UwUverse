@@ -23,9 +23,13 @@ namespace UwUverse
             m_actionQueue.Initialise(1);
 
             m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.GetAction(0, 0).id = (int)ActionIDS.MoveAction;
             m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.GetAction(0, 1).id = (int)ActionIDS.MoveAction;
             m_actionQueue.AddAction(0, new MoveAlongPathAction());
+            m_actionQueue.GetAction(0, 2).id = (int)ActionIDS.MoveAction;
             m_actionQueue.AddAction(0, new BlockAction());
+            m_actionQueue.GetAction(0, 3).id = (int)ActionIDS.BlockAction;
         }
 
         public override void Step()
@@ -42,6 +46,12 @@ namespace UwUverse
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void Update()
+        {
+            if(m_currentAction != null && m_currentAction.id == (int)ActionIDS.MoveAction)
+                CheckTileForDanger();
         }
 
 #if UNITY_EDITOR

@@ -86,7 +86,8 @@ namespace UwUverse
 
         public void ExecuteStep(GridNode cur_node, GridNode tar_node, EnemyLogic me, GameObject target)
         {
-            if(m_canShoot == true)
+            me.CheckTileForDanger();
+            if (m_canShoot == true)
             {
                 GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/bullet"), Vector3.zero, Quaternion.identity);
                 bullet.GetComponent<bullet>().createBullet(me.currentNode.GetNeighbour(me.direction), me.direction);
