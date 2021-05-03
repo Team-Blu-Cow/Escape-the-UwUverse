@@ -15,7 +15,6 @@ namespace UwUverse
             set { m_brain.hp = value; }
         }
 
-
         private void Awake()
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();

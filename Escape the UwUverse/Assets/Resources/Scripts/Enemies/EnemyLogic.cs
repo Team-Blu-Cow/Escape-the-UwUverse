@@ -68,10 +68,9 @@ namespace UwUverse
     public class EnemyLogic : MonoBehaviour
     {
         // Debug editor members
-#if UNITY_EDITOR
+
         public bool drawPathGizmo;
         public bool drawDangerShapes;
-#endif
 
         // Action related members
         protected ActionQueue m_actionQueue;

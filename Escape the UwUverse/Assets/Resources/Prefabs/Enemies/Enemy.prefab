@@ -96,3 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_brain: {fileID: 0}
+  xDirArrowl: {fileID: 21300000, guid: e736e0efb9ca5d2449e078ebc45422dd, type: 3}
+  yDirArrowl: {fileID: 21300000, guid: 2bcdc74f9ce3b964d91e9ba4d9bc43be, type: 3}
