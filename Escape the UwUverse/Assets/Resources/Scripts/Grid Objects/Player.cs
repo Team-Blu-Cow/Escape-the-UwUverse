@@ -25,7 +25,7 @@ public class Player : GridEntity
 
     private void Awake()
     {
-        if(GameController.Instance.stepController != null)
+        if (GameController.Instance.stepController != null)
             GameController.StepController().Reset();
 
         m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
@@ -95,7 +95,7 @@ public class Player : GridEntity
 
     public IEnumerator WaitForGridEntities(Vector2Int direction)
     {
-        while(GameController.StepController().entitiesMoved < GameController.StepController().entityCount-1)
+        while (GameController.StepController().entitiesMoved < GameController.StepController().entityCount - 1)
         {
             yield return null;
         }
@@ -118,21 +118,21 @@ public class Player : GridEntity
     private void HitDetectionLogic()
     {
         /* Offsets & Nodes diagram
-        * 
+        *
         * P = player
         * n = index in list
         * ┌───┐
         * │ n │ = nodes[n]
         * └───┘
         * ✢n✢ = dangerVectors[n]
-        * 
-        * 
-        * 
+        *
+        *
+        *
         *      ┌───┐
         *      │↓1↓│
         *      └───┘
-        *┌───┐ ┌───┐ ┌───┐ 
-        *│→0→│ │↓3↓│ │←2←│ 
+        *┌───┐ ┌───┐ ┌───┐
+        *│→0→│ │↓3↓│ │←2←│
         *└───┘ └───┘ └───┘
         *      ╔═══╗
         *      ║↑P↑║
@@ -185,7 +185,7 @@ public class Player : GridEntity
         GameObject[] bullets = new GameObject[CheckNum];
         GameObject[] enemies = new GameObject[CheckNum];
 
-        if(Direction != Vector2Int.zero)
+        if (Direction != Vector2Int.zero)
             CheckForCollisionsMoving(nodes, dangerVectors);
         else
             CheckForCollisionsStationary(nodes, dangerVectors);
@@ -211,30 +211,28 @@ public class Player : GridEntity
                 }
             }
 
-
             // check nodes for enemy object
             if (nodes[i].HasObjectOfType<EnemyController>(ref enemies[i]))
             {
                 // check if enemy is moving to occupy target position
                 if (enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == dangerVectors[i]))
                 {
-                    switch(i)
+                    switch (i)
                     {
-
                         /* Offsets & Nodes diagram
-                         * 
+                         *
                          * P = player
                          * n = index in list
                          * ┌───┐
                          * │ n │ = nodes[n]
                          * └───┘
                          * ✢n✢ = dangerVectors[n]
-                         * 
+                         *
                          *      ┌───┐
                          *      │↓1↓│
                          *      └───┘
-                         *┌───┐ ┌───┐ ┌───┐ 
-                         *│→0→│ │↓3↓│ │←2←│ 
+                         *┌───┐ ┌───┐ ┌───┐
+                         *│→0→│ │↓3↓│ │←2←│
                          *└───┘ └───┘ └───┘
                          *      ╔═══╗
                          *      ║↑P↑║
@@ -266,9 +264,9 @@ public class Player : GridEntity
                                 }
                                 break;
                             }
-                    } 
+                    }
                 }
-                if( i == 3 && enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero))
+                if (i == 3 && enemies[i] != null && (enemies[i].GetComponent<GridEntity>().Direction == Vector2Int.zero))
 
                 {
                     Hit(enemies[i], 1);
@@ -399,6 +397,8 @@ public class Player : GridEntity
 
     private void SetShot(Vector2Int in_direction)
     {
+        if (in_direction == Vector2Int.zero)
+            return;
         if (!m_hasShot)
             m_hasShot = true;
 
@@ -421,8 +421,17 @@ public class Player : GridEntity
     {
         Vector2 directionf = GameController.Instance.camera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position;
         directionf.Normalize();
-        Vector2Int directioni = Vector2Int.RoundToInt(directionf);
-        return directioni;
+
+        if (Mathf.Abs(directionf.x) > Mathf.Abs(directionf.y))
+        {
+            directionf.y = 0f;
+        }
+        else
+        {
+            directionf.x = 0f;
+        }
+
+        return Vector2Int.RoundToInt(directionf);
     }
 
     private void Update()
