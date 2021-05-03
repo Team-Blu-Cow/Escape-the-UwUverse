@@ -9,7 +9,7 @@ namespace UwUverse
     {
         public enum ActionIDS : Int32
         {
-            MoveAction = 1,
+            MoveAction  = 1,
             BlockAction = 2
         }
 
@@ -35,6 +35,9 @@ namespace UwUverse
         public override void Step()
         {
             m_currentAction.ExecuteStep(null, null, this, null);
+
+            m_currentAction     = new MoveAlongPathAction();
+            m_currentAction.id  = (int)ActionIDS.MoveAction;
 
             //if (m_currentAction.id != (Int32)ActionIDS.BlockAction)
             CheckIfDead();
