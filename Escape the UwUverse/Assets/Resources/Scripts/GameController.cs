@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.IO;
 using System.Collections.Generic;
 using UwUverse;
 
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour
     {
         get
         {
-            if(_Instance == null)
+            if (_Instance == null)
             {
                 _Instance = new GameController();
             }
@@ -113,6 +114,15 @@ public class GameController : MonoBehaviour
             }
             return m_applicationPath;
         }
+    }
+
+    static public string ReadFile(string fileName)
+    {
+        var sr = new StreamReader(Application.dataPath + "/" + fileName);
+        var fileContents = sr.ReadToEnd();
+        sr.Close();
+
+        return fileContents;
     }
 
     public void SwitchScene(string in_scene)
