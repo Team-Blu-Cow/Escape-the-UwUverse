@@ -1,6 +1,22 @@
-<b>Hello</b>
-This is some Credits
-Gonna add some
-more lines
-and add this
-to the visuals
+<b>Demo End</b>
+Thanks For Playing!
+
+
+
+
+<b><u>Credits</u></b>
+
+<u>Programming:</u>
+Adam Emslie
+Jack Leslie
+Jay Marsden-Bullen
+Matthew Rennie
+Sandy Fisher
+
+<u>Art:</u>
+Becca Macleod
+Rae Girvan
+
+<u>Level Design</u>
+Matthew Rennie
+Sandy Fisher

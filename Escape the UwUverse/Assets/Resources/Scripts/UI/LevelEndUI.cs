@@ -16,7 +16,14 @@ namespace UwUVerse
 
             // Add on clicks for the buttons
             GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
-            GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { Resetlevel(m_currentLevel + 1); });
+            if (m_currentLevel == 3)
+            {
+                GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { GameController.Instance.SwitchScene("GameEnd"); });
+            }
+            else
+            {
+                GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { Resetlevel(m_currentLevel + 1); });
+            }
             GetComponentsInChildren<Button>()[2].onClick.AddListener(() => { Resetlevel(m_currentLevel); });
 
             handler = (in_) => GameReset(in_);

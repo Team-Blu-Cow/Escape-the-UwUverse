@@ -29,7 +29,7 @@ namespace UwUVerse
         private void Start()
         {
             transform.localPosition = new Vector3(0, -names.Count * m_tmp.fontSize, 0);
-            LeanTween.moveLocalY(gameObject, 630 + m_tmp.fontSize, 10 + names.Count);
+            LeanTween.moveLocalY(gameObject, 630 + m_tmp.fontSize, 10 + names.Count).setOnComplete( () => { GameController.Instance.SwitchScene("MainMenu"); });
         }
     }
 }
