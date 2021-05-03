@@ -28,7 +28,8 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < m_player.maxHealth; i++)
             {
-                transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+                //transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+                transform.GetChild(0).GetChild(i).gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("GFX/heart empty");
             }
         }
 
@@ -36,7 +37,8 @@ public class UIManager : MonoBehaviour
         {
             for (int i = 0; i < m_player.health; i++)
             {
-                transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+                //transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+                transform.GetChild(0).GetChild(i).gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("GFX/heart full");
             }
         }
     }
