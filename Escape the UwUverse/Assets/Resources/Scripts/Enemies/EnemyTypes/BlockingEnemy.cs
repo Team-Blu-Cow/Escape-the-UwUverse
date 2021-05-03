@@ -42,7 +42,7 @@ namespace UwUverse
 
         public override void CheckIfDead()
         {
-            if(m_isDead)
+            if (m_isDead)
             {
                 Destroy(gameObject);
             }
@@ -50,11 +50,12 @@ namespace UwUverse
 
         public void Update()
         {
-            if(m_currentAction != null && m_currentAction.id == (int)ActionIDS.MoveAction)
+            if (m_currentAction != null && m_currentAction.id == (int)ActionIDS.MoveAction)
                 CheckTileForDanger();
         }
 
 #if UNITY_EDITOR
+
         private void OnDrawGizmos()
         {
             if (drawPathGizmo)
@@ -71,13 +72,12 @@ namespace UwUverse
                 }
             }
 
-            if(drawDangerShapes)
+            if (drawDangerShapes)
             {
                 int pathNodeIndex = m_currentPathNode;
 
                 if (m_controller != null && currentNode != null && position == currentNode.m_grid.GetNearestNode(path[(m_currentPathNode + 1) % path.Length]).position)
                     pathNodeIndex = (m_currentPathNode + 1) % path.Length;
-
 
                 float dirX = path[(pathNodeIndex + 1) % path.Length].x - path[pathNodeIndex % path.Length].x;
                 float dirY = path[(pathNodeIndex + 1) % path.Length].y - path[pathNodeIndex % path.Length].y;
@@ -93,14 +93,15 @@ namespace UwUverse
                 offsets[3] = direction;
 
                 Gizmos.color = Color.red;
-                foreach(var offset in offsets)
+                foreach (var offset in offsets)
                 {
                     //Gizmos.DrawWireCube(m_targetPosition + new Vector3(offset.x,offset.y,0), Vector3.one * 0.8f);
-                    if(m_controller != null && currentNode != null)
-                        Gizmos.DrawWireCube(currentNode.worldPosition + new Vector3(offset.x,offset.y,0), Vector3.one * 0.8f);
+                    if (m_controller != null && currentNode != null)
+                        Gizmos.DrawWireCube(currentNode.worldPosition + new Vector3(offset.x, offset.y, 0), Vector3.one * 0.8f);
                 }
             }
         }
+
 #endif
     }
 }
