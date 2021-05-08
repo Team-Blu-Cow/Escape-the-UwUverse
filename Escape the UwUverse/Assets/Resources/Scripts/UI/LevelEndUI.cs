@@ -7,7 +7,7 @@ namespace UwUVerse
     public class LevelEndUI : MonoBehaviour
     {
         [SerializeField] private int m_currentLevel;
-        System.Action<bool> handler;
+        private System.Action<bool> handler;
 
         // Start is called before the first frame update
         private void Start()
@@ -18,7 +18,7 @@ namespace UwUVerse
             GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { GameController.Instance.SwitchScene("MainMenu"); });
             if (m_currentLevel == 3)
             {
-                GetComponentsInChildren<Button>()[1].onClick.AddListener(() => { GameController.Instance.SwitchScene("GameEnd"); });
+                GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { GameController.Instance.SwitchScene("GameEnd"); });
             }
             else
             {
@@ -49,8 +49,6 @@ namespace UwUVerse
                 GetComponentsInChildren<Button>()[1].GetComponentInChildren<TextMeshProUGUI>().enabled = true;
             }
 
-            
-
             SetWin(in_died);
             SetStats();
         }
@@ -70,9 +68,9 @@ namespace UwUVerse
         private void SetStats()
         {
             GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Stats: \n" +
-                "Moves Taken:"      + GameController.LevelStats().moves         + "\n" +
-                "Enemies Killed:"   + GameController.LevelStats().enemiesKilled + "\n" +
-                "Shots Fired:"      + GameController.LevelStats().shots         + "\n";
+                "Moves Taken:" + GameController.LevelStats().moves + "\n" +
+                "Enemies Killed:" + GameController.LevelStats().enemiesKilled + "\n" +
+                "Shots Fired:" + GameController.LevelStats().shots + "\n";
         }
 
         private void Resetlevel(int in_level)

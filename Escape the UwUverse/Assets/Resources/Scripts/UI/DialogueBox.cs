@@ -16,6 +16,8 @@ public class DialogueBox : MonoBehaviour
     [Header("Display Box")]
     [SerializeField] private UwUverse.DisplayDialog in_displayText;
 
+    [SerializeField] private bool oneTime;
+
     private Sprite[] m_people;
     private int m_personIndex;
 
@@ -41,6 +43,11 @@ public class DialogueBox : MonoBehaviour
             {
                 in_displayText.StartDialog(in_customDialog, in_textDelay);
             }
+        }
+
+        if (oneTime)
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 namespace UwUverse
@@ -19,6 +20,8 @@ namespace UwUverse
         {
             m_gridRef = GameObject.Find("Grid").GetComponent<TileGrid>();
             m_brain = gameObject.GetComponent<EnemyLogic>();
+
+            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GFX/Enemies/" + m_brain.GetType().Name);
         }
 
         private void Start()
